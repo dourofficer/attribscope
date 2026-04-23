@@ -10,9 +10,9 @@ One .safetensors file per trajectory under --output:
     Flat keys: "{step_idx}.{shorthand}.{pool_stat}"
 
     Examples:
-        "3.hidden/0.last"           step 3, embedding layer, last-token
-        "3.hidden/35.mean"          step 3, layer 35, mean over output tokens
-        "3.hidden/35_normed.last"   step 3, final layer post-norm, last-token
+        "3.last.embed"           step 3, embedding layer, last-token
+        "3.mean.act/35"          step 3, layer 35, mean over output tokens
+        "3.last.act/35_normed"   step 3, final layer post-norm, last-token
 
     Metadata stored in the safetensors header under "payload_metadata" (JSON).
 
@@ -23,7 +23,7 @@ python -m attribscope.reps.extract_hidden \
     --model  "/data/hoang/resources/models/Qwen/Qwen3-8B" \
     --input  data/ww/hand-crafted \
     --output outputs/hidden/qwen3-8b/hand-crafted \
-    --layers 0 16 32 \
+    --layers embed act/0 act/35 act/35_normed \
     --pool   last \
     --max_tokens 8192
 
@@ -34,8 +34,8 @@ python -m attribscope.reps.extract_hidden \
     --output outputs/hidden/qwen3-8b/hand-crafted \
     --layers all \
     --pool   all \
-    --max_tokens 8192 \
-    --start_idx 0 --end_idx 5
+    --max_tokens 16000 \
+    --start_idx 0 --end_idx 1
 """
 from __future__ import annotations
 
@@ -49,7 +49,11 @@ from pathlib import Path
 import torch
 from torch import Tensor
 from tqdm import tqdm
-from transformers import AutoModelForCausalLM, AutoTokenizer, PreTrainedModel
+from transformers import (
+    AutoModelForCausalLM, 
+    AutoTokenizer, 
+    PreTrainedModel
+)
 from safetensors.torch import save_file
 
 from ..data.trajectory import Trajectory, load_dataset
@@ -65,9 +69,9 @@ from .hidden import extract_hidden
 def extract_trajectory_hidden(
     traj:             Trajectory,
     model:            PreTrainedModel,
-    tokenizer,
+    tokenizer:        None,
     max_tokens:       int,
-    layers:           list[int] | str,   # list of ints or "all"
+    layers:           list[str] | str,   # list of ints or "all"
     pool:             str,               # "last" | "mean" | "all"
     device:           str,
     context_strategy: str = "dependency",
@@ -130,6 +134,45 @@ def extract_trajectory_hidden(
             torch.cuda.empty_cache()
 
     return hidden
+
+def extract_trajectories_hidden(
+    trajectories:     list[Trajectory],
+    out_dir:          Path,
+    model:            PreTrainedModel,
+    tokenizer:        None,
+    max_tokens:       int,
+    layers:           list[str] | str,   # list of ints or "all"
+    pool:             str,               # "last" | "mean" | "all"
+    device:           str,
+    context_strategy: str = "dependency",         # "dependency" | "all"
+):
+    pbar = tqdm(trajectories)
+    for traj in pbar:
+        out_path = out_dir / traj.filename.replace(".json", ".safetensors")
+        if out_path.exists():
+            pbar.write(f"  skip: {traj.filename}")
+            continue
+
+        pbar.set_postfix(file=traj.filename, n_steps=len(traj.history))
+
+        hidden = extract_trajectory_hidden(
+            traj, model, tokenizer, max_tokens,
+            layers, pool, device, context_strategy,
+            pbar,
+        )
+
+        # Flatten to "{step_idx}.{shorthand}.{stat}" → Tensor
+        # e.g. "3.hidden/35.last", "3.hidden/35_normed.mean"
+        flat_dict = {
+            f"{step_idx}.{key}": tensor.contiguous()
+            for step_idx, step_dict in hidden.items()
+            for key, tensor in step_dict.items()
+        }
+        assert flat_dict, f"No hidden states extracted for trajectory {traj.filename}"
+        header_metadata = {
+            "payload_metadata": json.dumps(_extract_metadata(traj))
+        }
+        save_file(flat_dict, out_path, metadata=header_metadata)
 
 
 def _extract_metadata(traj: Trajectory) -> dict:
@@ -196,11 +239,9 @@ def main():
     torch_dtype = dtype_map[args.dtype]
 
     # ── Resolve --layers ──────────────────────────────────────────────────────
-    if len(args.layers) == 1 and args.layers[0] == "all":
-        layers: list[int] | str = "all"
-    else:
-        layers = [int(x) for x in args.layers]
-        assert all(isinstance(i, int) for i in layers)
+    layers = args.layers
+    if len(layers) == 1 and layers[0] == "all": 
+        layers = layers[0]
 
     # ── Load model ────────────────────────────────────────────────────────────
     print(f"Loading tokenizer: {args.model}")
@@ -253,34 +294,10 @@ def main():
 
     # ── Extract ───────────────────────────────────────────────────────────────
     t0   = time.perf_counter()
-    pbar = tqdm(trajectories)
-
-    for traj in pbar:
-        out_path = out_dir / traj.filename.replace(".json", ".safetensors")
-        if out_path.exists():
-            pbar.write(f"  skip: {traj.filename}")
-            continue
-
-        pbar.set_postfix(file=traj.filename, n_steps=len(traj.history))
-
-        hidden = extract_trajectory_hidden(
-            traj, model, tokenizer, args.max_tokens,
-            layers, args.pool, device, args.context,
-            pbar,
-        )
-
-        # Flatten to "{step_idx}.{shorthand}.{stat}" → Tensor
-        # e.g. "3.hidden/35.last", "3.hidden/35_normed.mean"
-        flat_dict = {
-            f"{step_idx}.{key}": tensor.contiguous()
-            for step_idx, step_dict in hidden.items()
-            for key, tensor in step_dict.items()
-        }
-
-        header_metadata = {
-            "payload_metadata": json.dumps(_extract_metadata(traj))
-        }
-        save_file(flat_dict, out_path, metadata=header_metadata)
+    extract_trajectories_hidden(
+        trajectories, out_dir, model, tokenizer, args.max_tokens,
+        layers, args.pool, device, args.context,
+    )
 
     elapsed = time.perf_counter() - t0
     print(
