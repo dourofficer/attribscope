@@ -20,18 +20,18 @@ Usage
 -----
 # Specific layers, last-token pooling
 python -m attribscope.reps.extract_hidden \
-    --model  "/data/hoang/resources/models/Qwen/Qwen3-8B" \
+    --model  "/data/hoang/resources/models/meta-llama/Llama-3.1-8B" \
     --input  data/ww/hand-crafted \
-    --output outputs/hidden/qwen3-8b/hand-crafted \
+    --output outputs/hidden/llama-3.1-8b/hand-crafted \
     --layers embed act/0 act/35 act/35_normed \
     --pool   last \
     --max_tokens 8192
 
 # All layers, both pooling strategies
 python -m attribscope.reps.extract_hidden \
-    --model  "/data/hoang/resources/models/Qwen/Qwen3-8B" \
+    --model  "/data/hoang/resources/models/meta-llama/Llama-3.1-8B-Instruct" \
     --input  data/ww/hand-crafted \
-    --output outputs/hidden/qwen3-8b/hand-crafted \
+    --output outputs/hidden/llama-3.1-8b/hand-crafted \
     --layers all \
     --pool   all \
     --max_tokens 16000 \

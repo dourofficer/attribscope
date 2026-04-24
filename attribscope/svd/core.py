@@ -20,7 +20,7 @@ def projection_svd(
     R: torch.Tensor, # (T, d) matrix of row reps to score
     V: torch.Tensor, # (d, c) matrix of top-c right singular vectors from G
     c: int = 1,
-    centered: bool = True,
+    ref: torch.Tensor | None = None, # (d,) mean gradient for centering, if desired
 ) -> torch.Tensor:
     """Mean squared projection of each row onto the top-c right singular vectors.
 
@@ -33,7 +33,8 @@ def projection_svd(
     """
     assert c <= V.shape[1], f"Requested c={c} exceeds n_components={V.shape[1]}"
     R_f = R.float()
-    if centered: R_f = R_f - R_f.mean(dim=0)
+    if ref is not None:
+        R_f = R_f - ref
     scores =  (R_f @ V[:, :c]).square().mean(dim=1).to(R.dtype)
     return scores
 
@@ -42,7 +43,7 @@ def reconstruction_svd(
     R: torch.Tensor,
     V: torch.Tensor,
     c: int = 5,
-    centered: bool = True,
+    ref: torch.Tensor | None = None,
 ) -> torch.Tensor:
     """Residual L2 norm after projecting each row onto the top-c SVD subspace.
 
@@ -53,20 +54,7 @@ def reconstruction_svd(
     """
     assert c <= V.shape[1], f"Requested c={c} exceeds n_components={V.shape[1]}"
     R_f = R.float()
-    if centered: R_f = R_f - R_f.mean(dim=0)
+    if ref is not None:
+        R_f = R_f - ref
     G_rec = (R_f @ V[:, :c]) @ V[:, :c].T
     return torch.norm(R_f - G_rec, dim=1).to(R.dtype)
-
-
-
-# ═══════════════════════════════════════════════════════════════════
-# Factories
-# ═══════════════════════════════════════════════════════════════════
-
-def make_projection_scoring(c: int = 1, centered: bool = True):
-    def scoring(G): return projection_svd(G, c=c, centered=centered)
-    return scoring
-
-def make_reconstruction_scoring(c: int = 5, centered: bool = True):
-    def scoring(G): return reconstruction_svd(G, c=c, centered=centered)
-    return scoring

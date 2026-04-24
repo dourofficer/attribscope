@@ -17,7 +17,19 @@ Example
         --out-dir outputs/grads \
         --poolings grad \
         --n-components-fit 10 \
-        --n-components-score 1 3 5 \
+        --n-components-score all \
+        --ks 1 3 5 10
+
+CUDA_VISIBLE_DEVICES=1 python -m attribscope.svd.compute_scores \
+        --models qwen3-8b \
+        --score-subsets hand-crafted \
+        --fit-subset hand-crafted \
+        --base-dir outputs/hidden \
+        --data-dir data/ww \
+        --out-dir outputs/hidden \
+        --poolings mean last \
+        --n-components-fit 10 \
+        --n-components-score all \
         --ks 1 3 5 10
 
 Output layout
@@ -78,14 +90,23 @@ def load_singular_vectors(
     Returns a dict mapping weight_name -> (d, n_components_fit) tensor.
     """
     tag = "centered" if centered else "raw"
-    fp  = (
+    artifact_dir  = (
         base_dir / model / "svd" / fit_subset
-        / f"{pooling}_c{n_components_fit}_{tag}" / "V.safetensors"
+        / f"{pooling}_c{n_components_fit}_{tag}"
     )
-    assert fp.exists(), f"Missing SVD file: {fp}"
-    with safe_open(fp, framework="pt") as f:
-        return {k: f.get_tensor(k).to(device) for k in f.keys()}
-
+    V_file = artifact_dir / "V.safetensors"
+    assert V_file.exists(), f"Missing SVD file: {V_file}"
+    with safe_open(V_file, framework="pt") as f:
+        V =  {k: f.get_tensor(k).to(device) for k in f.keys()}
+    
+    result = {"V": V, "ref": None}
+    if not centered: return result
+    ref_file = artifact_dir / "ref.safetensors"
+    assert ref_file.exists(), f"Missing reference file: {ref_file}"
+    with safe_open(artifact_dir / "ref.safetensors", framework="pt") as f:
+        refs = {k: f.get_tensor(k).to(device) for k in f.keys()}
+        result["ref"] = refs
+    return result
 
 def get_evaluation_metadata(
     keeper: StoreKeeper,
@@ -135,6 +156,7 @@ def score_one_weight(
     weight_name:     str,
     R:               torch.Tensor,          # (T, d)
     V:               torch.Tensor,          # (d, n_components_fit)
+    ref:             torch.Tensor | None,  # (d,) or None
     score_fn:        Callable,
     c:               int,
     centered:        bool,
@@ -144,7 +166,10 @@ def score_one_weight(
     ks:              list[int],
 ) -> dict:
     """Compute scores for one weight and return a metrics row dict."""
-    scores = score_fn(R, V, c=c, centered=centered)
+    if centered: assert ref is not None, "Centered config requires reference vector"
+    if not centered: assert ref is None, "Raw config shouldn't have reference vector"
+
+    scores = score_fn(R, V, c=c, ref=ref)
     row: dict = {"weight": weight_name}
     for direction in ("asc", "desc"):
         row.update(compute_metrics(
@@ -180,13 +205,15 @@ def score_one_config(
 
     rows: list[dict] = []
     for store in stores.values():
-        if store.name not in singulars:
+        if store.name not in singulars["V"]:
             print(f"    [skip] {store.name} not in singular vectors")
             continue
         row = score_one_weight(
             weight_name     = store.name,
             R               = store.R,
-            V               = singulars[store.name],
+            V               = singulars["V"][store.name],
+            ref             = singulars["ref"][store.name] \
+                              if singulars["ref"] else None,
             score_fn        = score_fn,
             c               = c,
             centered        = centered,
@@ -238,19 +265,19 @@ def score_one_subset(
     )
 
     for centered in (True, False):
-        try:
-            singulars = load_singular_vectors(
-                base_dir         = args.base_dir,
-                model            = model,
-                fit_subset       = args.fit_subset,
-                pooling          = pooling,
-                n_components_fit = args.n_components_fit,
-                centered         = centered,
-                device           = device,
-            )
-        except AssertionError as exc:
-            print(f"  [skip] {exc}")
-            continue
+        # try:
+        singulars = load_singular_vectors(
+            base_dir         = args.base_dir,
+            model            = model,
+            fit_subset       = args.fit_subset,
+            pooling          = pooling,
+            n_components_fit = args.n_components_fit,
+            centered         = centered,
+            device           = device,
+        )
+        # except AssertionError as exc:
+        #     print(f"  [skip] {exc}")
+        #     continue
 
         for method, score_fn in SCORING_FNS.items():
             for c in args.n_components_score:
@@ -311,7 +338,7 @@ def parse_args() -> argparse.Namespace:
                    help="Pooling strategies to evaluate")
     p.add_argument("--n-components-fit", type=int,  default=10,
                    help="Number of singular vectors that were used when fitting")
-    p.add_argument("--n-components-score", type=int,  nargs="+", default=[5],
+    p.add_argument("--n-components-score", type=str,  nargs="+", default=["5"],
                    help="Number(s) of singular vectors to use when scoring")
     p.add_argument("--ks", type=int,  nargs="+", default=[1, 3, 5, 10],
                    help="Top-k values for step@k and agent@k metrics")
@@ -324,12 +351,13 @@ if __name__ == "__main__":
     if args.out_dir is None:
         args.out_dir = args.base_dir
 
-    n_components_score = args.n_components_score
-    if args.n_components_score == "all":
-        n_components_score = list(range(1, args.n_components_fit + 1))
-        print("Using all n_components_score values:", n_components_score)
-        
-    invalid = [c for c in n_components_score if c > args.n_components_fit]
+    if args.n_components_score == ["all"]:
+        args.n_components_score = list(range(1, args.n_components_fit + 1))
+        print("Using all n_components_score values:", args.n_components_score)
+    else:
+        args.n_components_score = [int(c) for c in args.n_components_score]
+
+    invalid = [c for c in args.n_components_score if c > args.n_components_fit]
     if invalid:
         raise ValueError(
             f"--n-components-score values {invalid} exceed "
