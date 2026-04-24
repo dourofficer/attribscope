@@ -50,7 +50,8 @@ class GradientStore:
 
 def get_all_weight_names(fp: Path):
     with safe_open(fp, framework="pt") as f:
-        return sorted({k.split(".", 1)[1] for k in f.keys()})
+        # return sorted({k.split(".", 1)[1] for k in f.keys()})
+        return sorted({k.split(".", 2)[-1] for k in f.keys()})
         
 def load_and_stack(
     model: str,
@@ -60,7 +61,8 @@ def load_and_stack(
     device: torch.device,
     grad_dir: Path,
 ):
-    input_dir = grad_dir / model / subset
+    # input_dir = grad_dir / model / subset
+    input_dir = grad_dir / model / "reps" / subset
     files = sorted(input_dir.glob("*.safetensors"), key=lambda x: int(x.stem))
     
     # Initialize containers for each requested layer
@@ -99,7 +101,8 @@ def load_and_stack(
             for step_idx in step_indices:
                 # 1. Collect tensors for EVERY requested layer at this step
                 for name in weight_names:
-                    key = f"{step_idx}.{name}"
+                    # key = f"{step_idx}.{name}"
+                    key = f"{step_idx}.grad.{name}"
                     layer_collections[name].append(f.get_tensor(key))
                 
                 # 2. Record index (only once per step)

@@ -23,7 +23,7 @@ One .pt file per trajectory under --output:
 Usage
 -----
 # Single parameter
-python -m attribscope.reps.extract \
+python -m attribscope.reps.extract_grads \
     --model  "/data/hoang/resources/models/Qwen/Qwen3-8B" \
     --input  data/ww/hand-crafted \
     --output outputs/grads/qwen3-8b/hand-crafted \
@@ -31,7 +31,7 @@ python -m attribscope.reps.extract \
     --max_tokens 8192
 
 # Multiple parameters
-python -m attribscope.reps.extract \
+python -m attribscope.reps.extract_grads \
     --model  "/data/hoang/resources/models/Qwen/Qwen3-8B" \
     --input  data/ww/hand-crafted \
     --output outputs/grads/qwen3-8b/hand-crafted \
@@ -39,10 +39,10 @@ python -m attribscope.reps.extract \
     --max_tokens 8192
 
 # All parameters
-python -m attribscope.reps.extract \
+python -m attribscope.reps.extract_grads \
     --model  "/data/hoang/resources/models/Qwen/Qwen3-8B" \
     --input  data/ww/hand-crafted \
-    --output outputs/grads/qwen3-8b/hand-crafted \
+    --output outputs/grads/qwen3-8b/reps/hand-crafted \
     --target_params all \
     --max_tokens 8192 \
     --start_idx 0 --end_idx 1

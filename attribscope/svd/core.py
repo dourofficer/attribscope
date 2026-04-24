@@ -17,7 +17,8 @@ def _run_svd(G: torch.Tensor, c: int) -> torch.Tensor:
 
 
 def projection_svd(
-    G: torch.Tensor,
+    R: torch.Tensor, # (T, d) matrix of row reps to score
+    V: torch.Tensor, # (d, c) matrix of top-c right singular vectors from G
     c: int = 1,
     centered: bool = True,
 ) -> torch.Tensor:
@@ -30,15 +31,16 @@ def projection_svd(
     aligns with the outlier direction, so a large projection flags OOD rows.
     Higher score = more anomalous.
     """
-    G_f = G.float()
-    if centered:
-        G_f = G_f - G_f.mean(dim=0)
-    V = _run_svd(G_f, c)
-    return (G_f @ V).square().mean(dim=1).to(G.dtype)
+    assert c <= V.shape[1], f"Requested c={c} exceeds n_components={V.shape[1]}"
+    R_f = R.float()
+    if centered: R_f = R_f - R_f.mean(dim=0)
+    scores =  (R_f @ V[:, :c]).square().mean(dim=1).to(R.dtype)
+    return scores
 
 
 def reconstruction_svd(
-    G: torch.Tensor,
+    R: torch.Tensor,
+    V: torch.Tensor,
     c: int = 5,
     centered: bool = True,
 ) -> torch.Tensor:
@@ -49,11 +51,11 @@ def reconstruction_svd(
     rows off this subspace (structural outliers) have large residuals.
     Higher score = more anomalous.
     """
-    G_f = G.float()
-    G_c = G_f - G_f.mean(dim=0) if centered else G_f
-    V     = _run_svd(G_c, c)
-    G_rec = (G_c @ V) @ V.T
-    return torch.norm(G_c - G_rec, dim=1).to(G.dtype)
+    assert c <= V.shape[1], f"Requested c={c} exceeds n_components={V.shape[1]}"
+    R_f = R.float()
+    if centered: R_f = R_f - R_f.mean(dim=0)
+    G_rec = (R_f @ V[:, :c]) @ V[:, :c].T
+    return torch.norm(R_f - G_rec, dim=1).to(R.dtype)
 
 
 # ═══════════════════════════════════════════════════════════════════

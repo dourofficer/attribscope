@@ -1,3 +1,14 @@
+"""
+python -m attribscope.scoring.score          \
+    --models   "qwen3-8b"  \
+    --subsets  "hand-crafted" \
+    --ks       1 3 5 10      \
+    --data-dir "data/ww"     \
+    --grad-dir "outputs/grads"  \
+    --out-dir  "outputs/temps"   
+
+"""
+
 from __future__ import annotations
 
 import argparse
