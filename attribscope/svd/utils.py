@@ -163,6 +163,7 @@ def load_and_stack(
             for step_idx in step_indices:
                 for w in weight_names:
                     key = f"{step_idx}.{pooling}.{w}"
+                    # assert key in f.keys(), f"Missing key {key} in {fp}"
                     collections[w].append(f.get_tensor(key))
 
                 index.append(StepIndex(
@@ -176,6 +177,7 @@ def load_and_stack(
             traj_ranges.append((start_row, row))
 
     # Stack each collection and wrap in a RepresentationStore.
+
     stores = {
         w: RepresentationStore(
             R=torch.stack(tensors).to(device),
@@ -225,7 +227,6 @@ def standardize_role(role: str) -> str:
 
 def compute_metrics(
     scores: np.ndarray,
-    store: RepresentationStore,
     keeper: StoreKeeper,
     mistake_indices: list[int | None],  # absolute step_idx in history
     mistake_roles: list[str | None],
@@ -264,48 +265,3 @@ def compute_metrics(
         **{f"step@{k}_{direction}":  step_hits[k]  / total_trajs for k in ks},
         **{f"agent@{k}_{direction}": agent_hits[k] / total_trajs for k in ks},
     }
-
-def evaluate_weights(
-    stores: RepresentationStores,
-    keeper: StoreKeeper,
-    scoring_fn: Callable[[torch.Tensor], torch.Tensor],
-    ks: list[int] = [1, 3, 5],
-) -> pd.DataFrame:
-
-    # --- Phase 1: Compute scores for all weights ---
-    all_scores: dict[str, np.ndarray] = {}
-    for weight_name, G in tqdm(store.Gs.items(), desc="Scoring"):
-        all_scores[weight_name] = scoring_fn(G).cpu().numpy()
-
-    # --- Precompute trajectory metadata ---
-    mistake_indices: list[int | None] = []
-    mistake_roles:   list[str | None] = []
-
-    for start, end in keeper.traj_ranges:
-        traj_index  = keeper.index[start:end]
-        mistake_entry = next((e for e in traj_index if e.is_mistake), None)
-        mistake_role = keeper.traj_meta[mistake_entry.traj_idx]['mistake_agent']
-        mistake_idx = mistake_entry.step_idx
-
-        mistake_roles.append(mistake_role)
-        mistake_indices.append(mistake_idx)
-
-    # --- Phase 2: Evaluate predictions (parallelized over weights) ---
-    results = []
-    for weight_name, scores in tqdm(all_scores.items(), desc="Predicting"):
-        row = {"weight": weight_name}
-        for direction in ["asc", "desc"]:
-            row |= compute_metrics(
-                scores, 
-                store, 
-                keeper,
-                mistake_indices, 
-                mistake_roles, 
-                ks, 
-                direction
-            )
-        results.append(row)
-
-    df = pd.DataFrame(results)
-    df = df.sort_values("step@1_asc", ascending=False).reset_index(drop=True)
-    return df

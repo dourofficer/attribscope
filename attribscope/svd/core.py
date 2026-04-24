@@ -58,47 +58,6 @@ def reconstruction_svd(
     return torch.norm(R_f - G_rec, dim=1).to(R.dtype)
 
 
-# ═══════════════════════════════════════════════════════════════════
-# Role-based orchestration
-# ═══════════════════════════════════════════════════════════════════
-
-def group_role(role: str) -> str:
-    if role.startswith("Orchestrator (->"):
-        return "Orchestrator (-> Agent)"
-    return role
-
-
-def split_by_role(G: torch.Tensor, index: list) -> dict:
-    ROLES = set(group_role(idx.role) for idx in index)
-    role_Gs = {}
-    for role in ROLES:
-        role_idxs = [idx.row for idx in index if group_role(idx.role) == role]
-        role_mask = torch.tensor(
-            [group_role(idx.role) == role for idx in index],
-            device=G.device,
-        )
-        role_Gs[role] = {"idx": role_idxs, "G": G[role_mask]}
-    return role_Gs
-
-
-def compute_split_scores(G: torch.Tensor, index: list, scoring: Callable) -> torch.Tensor:
-    role_Gs = split_by_role(G, index)
-    scores  = torch.zeros(G.shape[0], device=G.device, dtype=G.dtype)
-    for role_data in role_Gs.values():
-        scores[role_data["idx"]] = scoring(role_data["G"])
-    return scores
-
-
-def compute_scores(G: torch.Tensor, index: list, scoring: Callable) -> torch.Tensor:
-    return scoring(G)
-
-
-def make_scoring_fn(index, scoring, name: str = "scoring_by_role"):
-    def scoring_fn(G: torch.Tensor) -> torch.Tensor:
-        return compute_scores(G, index, scoring)
-    scoring_fn.__name__ = name
-    return scoring_fn
-
 
 # ═══════════════════════════════════════════════════════════════════
 # Factories

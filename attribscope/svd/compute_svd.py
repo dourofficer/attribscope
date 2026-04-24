@@ -20,6 +20,13 @@ Example
         --pooling mean \
         --n-components 10
 
+    python -m attribscope.svd.compute_svd \
+        --models qwen3-8b \
+        --subsets hand-crafted \
+        --rep-dir outputs/grads \
+        --pooling grad \
+        --n-components 10
+
 Output layout
 -------------
     {rep-dir}/{model}/svd/{subset}/
@@ -70,7 +77,7 @@ def _fit_svd(G: torch.Tensor, n_components: int) -> torch.Tensor:
     Shape: (d, n_components).
     """
     _, _, V = torch.svd_lowrank(G.float(), q=n_components, niter=10)
-    return V
+    return V.contiguous()
 
 
 def _hash_first_mib(G: torch.Tensor, n_bytes: int = 1 << 20) -> str:
