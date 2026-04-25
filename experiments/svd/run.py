@@ -20,9 +20,10 @@ import shlex
 import subprocess
 import sys
 from pathlib import Path
-
+from rich.console import Console
 import yaml
 
+CONSOLE = Console()
 
 def load_cfg(path: Path, overrides: list[str]) -> dict:
     cfg = yaml.safe_load(path.read_text())
@@ -38,10 +39,28 @@ def load_cfg(path: Path, overrides: list[str]) -> dict:
 def poolings_for(cfg: dict, rep_kind: str) -> list[str]:
     return cfg["shared"]["poolings"] or cfg["shared"]["poolings_by_rep_kind"][rep_kind]
 
+def format_command(module: str, argv: list[str]) -> str:
+    head = f"{sys.executable} -m {module}"
+    if not argv:
+        return head
+
+    groups, current = [], []
+    for token in argv:
+        if token.startswith("--") and current:
+            groups.append(current)
+            current = []
+        current.append(token)
+    groups.append(current)
+
+    formatted_groups = [" ".join(shlex.quote(t) for t in g) 
+                        for g in groups]
+    args = " \\\n    ".join(formatted_groups)
+    return f"{head} \\\n    {args}"
 
 def run(module: str, argv: list[str], dry_run: bool) -> None:
     cmd = [sys.executable, "-m", module, *argv]
-    print("+", " ".join(shlex.quote(a) for a in cmd))
+    CONSOLE.print(format_command(module, argv), style="green")
+    CONSOLE.rule()
     if not dry_run:
         subprocess.run(cmd, check=True)
 

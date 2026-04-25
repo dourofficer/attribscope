@@ -159,7 +159,7 @@ def fit_and_save(
         save_file(V_raw, str(raw_dir / "V.safetensors"))
         (raw_dir / "meta.json").write_text(json.dumps(
             {**base_meta, "centered": False}, indent=2))
-        print(f"  → {raw_dir}")
+        print(f"  Saved {raw_dir}")
 
         # ── Write centered ────────────────────────────────────────────────
         save_file(V_centered, str(centered_dir / "V.safetensors"))
