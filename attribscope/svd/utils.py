@@ -252,13 +252,13 @@ def compute_metrics(
         step_scores.sort(key=lambda x: x[2], reverse=not ascending)
 
         ranked_steps  = [step_idx for step_idx, _, _ in step_scores]
-        ranked_roles  = [standardize_role(role) for _, role, _ in step_scores]
+        ranked_roles  = [standardize_role(role).lower() for _, role, _ in step_scores]
         mistake_rank  = ranked_steps.index(mistake_step) + 1  # 1-based ranking.
 
         for k in ks:
             if mistake_rank <= k:
                 step_hits[k] += 1
-            if mistake_role in ranked_roles[:k]:
+            if mistake_role.lower() in ranked_roles[:k]:
                 agent_hits[k] += 1
 
     return {

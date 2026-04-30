@@ -107,12 +107,12 @@ def run_grads(cfg: dict, dry_run: bool) -> None:
             for temp in temperatures:
                 if temp is not None:
                     temp_tag  = f"temp_{temp}"
-                    out_dir   = f"{s['outputs_root']}/grads/{model}-kl/{temp_tag}/{subset}/"
+                    out_dir   = f"{s['outputs_root']}/grads/{model}-kl/{temp_tag}/reps/{subset}/"
                     temp_argv = ["--temperature", str(temp)]
                 else:
                     out_dir   = f"{s['outputs_root']}/grads/{model}/{subset}"
                     if loss == "kl_uniform": 
-                        out_dir   = f"{s['outputs_root']}/grads/{model}-kl/uniform/{subset}"
+                        out_dir   = f"{s['outputs_root']}/grads/{model}-kl/uniform/reps/{subset}"
                     temp_argv = []
 
                 run("attribscope.reps.extract_grads", [
@@ -143,7 +143,7 @@ def run_hidden(cfg: dict, dry_run: bool) -> None:
             run("attribscope.reps.extract_hidden", [
                 "--model",      model_path,
                 "--input",      f"{s['data_dir']}/{subset}",
-                "--output",     f"{s['outputs_root']}/hidden/{model}/{subset}",
+                "--output",     f"{s['outputs_root']}/hidden/{model}/reps/{subset}",
                 "--layers",     *layers,
                 "--pool",       h["pool"],
                 "--max_tokens", str(s.get("max_tokens", 8192)),

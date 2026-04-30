@@ -48,6 +48,7 @@ class Trajectory:
     level:         int
     subset:        str
     question:      str
+    system:        str
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -96,6 +97,18 @@ def load_dataset(
 
     trajectories: list[Trajectory] = []
     for filename, item in raw:
+        system_description = None
+        if subset == "algorithm-generated":
+            system = item.get("system_prompt")
+            prefix = "## Your role\n"
+            agents = [
+                f"{name}: {description[len(prefix):].strip()}"
+                for name, description
+                in system.items()
+            ]
+            system_description = "\n\n".join(agents)
+        elif subset == "hand-crafted":
+            pass
         traj = Trajectory(
             filename      = filename,
             question_id   = item["question_ID"],
@@ -105,6 +118,7 @@ def load_dataset(
             level         = item.get("level", -1),
             subset        = subset,
             question      = item.get("question", ""),
+            system        = system_description,
         )
         trajectories.append(traj)
 

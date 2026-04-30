@@ -2,7 +2,7 @@
 # Extraction sweep for grads and hidden states.  Shrink any list to narrow.
 
 shared:
-  models:   [qwen3-8b, llama-3.1-8b]
+  models:   [llama-3.1-8b, qwen3-8b]
   subsets:  [magentic-one, tau-retail]
 
   outputs_root: outputs
@@ -20,7 +20,7 @@ shared:
   # Use the shorthand directly if the model is on the HF Hub.
   model_paths:
     qwen3-8b:     /data/hoang/resources/models/Qwen/Qwen3-8B
-    llama-3.1-8b: /data/hoang/resources/models/meta-llama/Llama-3.1-8B
+    llama-3.1-8b: /data/hoang/resources/models/meta-llama/Llama-3.1-8B-Instruct
 
 # ── Gradient extraction ───────────────────────────────────────────────────────
 grads:
