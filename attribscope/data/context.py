@@ -254,7 +254,7 @@ def build_context_base(
             return {"input_ids": full_ids["input_ids"], "ctx_len": ctx_len}
 
     ctx_len = prefix_ids["input_ids"].shape[1]
-    breakpoint()
+    # breakpoint()
     return {"input_ids": full_ids["input_ids"], "ctx_len": ctx_len}
 
 

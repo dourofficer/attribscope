@@ -73,12 +73,12 @@ CONTEXT_FNS = {
     "Llama-3.1-8B":  build_context_base
 }
 
-CONTEXT_FNS = {
-    "Qwen3-8B":      build_context_base,
-    "Qwen3-8B-Base": build_context_base,
-    "Llama-3.1-8B-Instruct": build_context_base,
-    "Llama-3.1-8B":  build_context_base
-}
+# CONTEXT_FNS = {
+#     "Qwen3-8B":      build_context_base,
+#     "Qwen3-8B-Base": build_context_base,
+#     "Llama-3.1-8B-Instruct": build_context_base,
+#     "Llama-3.1-8B":  build_context_base
+# }
 
 
 # ─────────────────────────────────────────────────────────────────────────────
