@@ -44,6 +44,7 @@ import json
 import sys
 import time
 from collections import OrderedDict
+from typing import Any, Callable
 from pathlib import Path
 
 import torch
@@ -57,9 +58,27 @@ from transformers import (
 from safetensors.torch import save_file
 
 from ..data.trajectory import Trajectory, load_dataset
-from ..data.context import iter_scoreable_steps, build_context
+from ..data.context import (
+    iter_scoreable_steps, 
+    build_context_template, 
+    build_context_base
+)
 
 from .hidden import extract_hidden
+
+CONTEXT_FNS = {
+    "Qwen3-8B":      build_context_template,
+    "Qwen3-8B-Base": build_context_base,
+    "Llama-3.1-8B-Instruct": build_context_template,
+    "Llama-3.1-8B":  build_context_base
+}
+
+CONTEXT_FNS = {
+    "Qwen3-8B":      build_context_base,
+    "Qwen3-8B-Base": build_context_base,
+    "Llama-3.1-8B-Instruct": build_context_base,
+    "Llama-3.1-8B":  build_context_base
+}
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -75,6 +94,7 @@ def extract_trajectory_hidden(
     pool:             str,               # "last" | "mean" | "all"
     device:           str,
     context_strategy: str = "dependency",
+    context_fn:       Callable = build_context_template,
     pbar=None,
 ) -> dict[int, dict[str, Tensor]]:
     """Extract pooled hidden states for all scoreable steps in a trajectory.
@@ -95,8 +115,8 @@ def extract_trajectory_hidden(
     hidden: dict[int, dict[str, Tensor]] = {}
 
     for step_idx in iter_scoreable_steps(traj):
-        encoded = build_context(
-            traj.history,
+        encoded = context_fn(
+            traj,
             step_idx,
             tokenizer,
             max_tokens=max_tokens,
@@ -144,7 +164,8 @@ def extract_trajectories_hidden(
     layers:           list[str] | str,   # list of ints or "all"
     pool:             str,               # "last" | "mean" | "all"
     device:           str,
-    context_strategy: str = "dependency",         # "dependency" | "all"
+    context_strategy: str = "dependency", # "dependency" | "all"
+    context_fn:       Callable = build_context_template,
 ):
     pbar = tqdm(trajectories)
     for traj in pbar:
@@ -158,7 +179,7 @@ def extract_trajectories_hidden(
         hidden = extract_trajectory_hidden(
             traj, model, tokenizer, max_tokens,
             layers, pool, device, context_strategy,
-            pbar,
+            context_fn, pbar,
         )
 
         # Flatten to "{step_idx}.{shorthand}.{stat}" → Tensor
@@ -259,6 +280,10 @@ def main():
     n_layers = model.config.num_hidden_layers
     print(f"  {n_params / 1e9:.2f}B parameters  |  {n_layers} transformer layers.")
 
+    # ── Context builder ──────────────────────────────────────────────────────
+    model_key  = Path(args.model).parts[-1]
+    context_fn = CONTEXT_FNS[model_key]
+
     # ── Validate --layers against actual model depth ──────────────────────────
     if layers != "all":
         print(f"  Target layers: {layers}  |  pool: {args.pool}")
@@ -296,7 +321,7 @@ def main():
     t0   = time.perf_counter()
     extract_trajectories_hidden(
         trajectories, out_dir, model, tokenizer, args.max_tokens,
-        layers, args.pool, device, args.context,
+        layers, args.pool, device, args.context, context_fn
     )
 
     elapsed = time.perf_counter() - t0

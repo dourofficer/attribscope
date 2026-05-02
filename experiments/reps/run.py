@@ -84,6 +84,23 @@ def index_args(s: dict) -> list[str]:
 
 
 def run_grads(cfg: dict, dry_run: bool) -> None:
+    """
+    File structure, each of the leaf directories
+    contains */reps/{subset}/*.safetensors files.
+    .
+    ├── grads
+    │   ├── llama-3.1-8b
+    │   ├── llama-3.1-8b-kl
+    │   │   ├── temp_1.x
+    │   │   └── uniform
+    │   ├── qwen3-8b
+    │   └── qwen3-8b-kl
+    │       ├── temp_1.x
+    │       └── uniform
+    └── hidden
+        ├── llama-3.1-8b
+        └── qwen3-8b
+    """
     s, g = cfg["shared"], cfg["grads"]
 
     target_params = g["target_params"]

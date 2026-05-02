@@ -80,8 +80,8 @@ def _serialize_turns(history: list[dict], indices: list[int]) -> str:
 # Context builders
 # ─────────────────────────────────────────────────────────────────────────────
 
-def build_context(
-    history:    list[dict],
+def build_context_template(
+    traj:       Trajectory,
     step_idx:   int,
     tokenizer:  PreTrainedTokenizer,
     max_tokens: int | None = None,
@@ -133,6 +133,7 @@ def build_context(
         tokenizer.apply_chat_template(..., enable_thinking=False)
     or by patching the template variable before calling build_context.
     """
+    history      = traj.history
     ctx_indices  = select_context(history, step_idx, strategy=strategy)
     # assert ctx_indices == list(range(step_idx)), "taking full context, no graph"
     step_content = history[step_idx].get("content", "").strip()
@@ -177,6 +178,83 @@ def build_context(
  
     ctx_len = prefix_ids["input_ids"].shape[1]
     # breakpoint()
+    return {"input_ids": full_ids["input_ids"], "ctx_len": ctx_len}
+
+
+def build_context_base(
+    traj:       Trajectory,
+    step_idx:   int,
+    tokenizer:  PreTrainedTokenizer,
+    max_tokens: int | None = None,
+    strategy:   str = "dependency",
+) -> dict[str, Any]:
+    """Tokenise one (context, step) pair for GradNorm scoring — base model variant.
+
+    Layout (plain text concatenation, no chat template)
+    ----------------------------------------------------
+        
+        [role_0] - Step 0: content_0
+
+        [role_1] - Step 1: content_1
+        ...                              ← context turns from select_context()
+
+        [role_k] - Step k: content_k    ← step being scored; NTP loss over these tokens
+
+    The full sequence is tokenised as a single string.  ctx_len is the number
+    of tokens in the context prefix (excluding the step content), so that
+    _ntp_loss can mask context positions exactly as it does for the instruct
+    variant.
+
+    Parameters
+    ----------
+    history   : full trajectory history.
+    step_idx  : step to score.  Must be ≥ 1 (step 0 is the human question).
+    tokenizer : HuggingFace tokeniser.  No chat_template is required or used.
+
+    Returns
+    -------
+    dict with:
+        "input_ids" : LongTensor shape (1, seq_len)
+        "ctx_len"   : int
+            Number of tokens *before* the first step-content token.
+    """
+    system_description = traj.system if traj.system else ""
+    history      = traj.history
+    ctx_indices  = select_context(history, step_idx, strategy=strategy)
+    step_text    = _serialize_turns(history, [step_idx])
+
+    def _apply(indices: list[int]) -> tuple[dict, dict]:
+        """Tokenise [system + prev steps + step] and the context-only prefix."""
+        ctx_text  = system_description + "\n\n" + _serialize_turns(history, indices)
+        ctx_text  = ctx_text.strip()
+        separator = "\n\n" if ctx_text else ""
+        full_text = ctx_text + separator + step_text
+
+        full_ids   = tokenizer(full_text,  return_tensors="pt")
+        prefix_ids = tokenizer(ctx_text + separator, return_tensors="pt")
+        return full_ids, prefix_ids
+
+    full_ids, prefix_ids = _apply(ctx_indices)
+
+    # ── Truncate context if full sequence exceeds max_tokens ─────────────
+    # Drop the oldest context turns one by one until the total fits.
+    # The step content is always preserved; only ctx_indices shrinks.
+    if max_tokens is not None:
+        while (
+            full_ids["input_ids"].shape[1] > max_tokens
+            and len(ctx_indices) > 0
+        ):
+            ctx_indices = ctx_indices[1:]   # drop oldest turn
+            full_ids, prefix_ids = _apply(ctx_indices)
+
+        if full_ids["input_ids"].shape[1] > max_tokens:
+            step_len = full_ids["input_ids"].shape[1] - prefix_ids["input_ids"].shape[1]
+            full_ids["input_ids"] = full_ids["input_ids"][:, -max_tokens:]
+            ctx_len = max(0, max_tokens - step_len)
+            return {"input_ids": full_ids["input_ids"], "ctx_len": ctx_len}
+
+    ctx_len = prefix_ids["input_ids"].shape[1]
+    breakpoint()
     return {"input_ids": full_ids["input_ids"], "ctx_len": ctx_len}
 
 

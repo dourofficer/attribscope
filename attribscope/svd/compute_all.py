@@ -209,7 +209,7 @@ def score_all(stores, svd, keeper, n_components_score, ks, device) -> list[dict]
     mistake_indices, mistake_roles = get_mistake_meta(keeper)
     rows = []
 
-    for s in stores.values():
+    for s in stores.values(): # "{pooling}.{name} -> s = RepresentationStore"
         if s.pooling not in svd or s.name not in svd[s.pooling]:
             continue
         W = svd[s.pooling][s.name]

@@ -66,10 +66,28 @@ from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer, PreTrainedModel
 
 from ..data.trajectory import Trajectory, load_dataset
-from ..data.context import iter_scoreable_steps, build_context
+from ..data.context import (
+    iter_scoreable_steps, 
+    build_context_template, 
+    build_context_base
+)
 
 from .gradients import extract_gradient_hooked, shorthand_to_param
 from .losses import LOSSES
+
+CONTEXT_FNS = {
+    "Qwen3-8B":      build_context_template,
+    "Qwen3-8B-Base": build_context_base,
+    "Llama-3.1-8B-Instruct": build_context_template,
+    "Llama-3.1-8B":  build_context_base
+}
+
+CONTEXT_FNS = {
+    "Qwen3-8B":      build_context_base,
+    "Qwen3-8B-Base": build_context_base,
+    "Llama-3.1-8B-Instruct": build_context_base,
+    "Llama-3.1-8B":  build_context_base
+}
 
 def extract_trajectory(
     traj:          Trajectory,
@@ -80,6 +98,7 @@ def extract_trajectory(
     loss_func:     Callable,
     device:        str,
     context_strategy:   str = "dependency",
+    context_fn:    Callable = build_context_template,
     pbar=None,
 ) -> dict[int, dict[str, Tensor]]:
     """Extract reduced gradient vectors for all scoreable steps in a trajectory.
@@ -105,8 +124,8 @@ def extract_trajectory(
     gradients: dict[int, dict[str, Tensor]] = {}
 
     for step_idx in iter_scoreable_steps(traj):
-        encoded = build_context(
-            traj.history, 
+        encoded = context_fn(
+            traj, 
             step_idx, 
             tokenizer, 
             max_tokens=max_tokens, 
@@ -227,6 +246,10 @@ def main():
     n_params = sum(p.numel() for p in model.parameters())
     print(f"  {n_params / 1e9:.2f}B parameters loaded.")
 
+    # ── Context builder ──────────────────────────────────────────────────────
+    model_key  = Path(args.model).parts[-1]
+    context_fn = CONTEXT_FNS[model_key]
+
     # ── Validate requested params ────────────────────────────────────────────
     if target_params != "all":
         all_param_names = {n for n, _ in model.named_parameters()}
@@ -284,7 +307,7 @@ def main():
         gradients = extract_trajectory(
             traj, model, tokenizer, args.max_tokens,
             target_params, loss_func, device, context_strategy, 
-            pbar,
+            context_fn, pbar,
         )
 
         # flat_dict = {
