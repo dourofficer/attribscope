@@ -413,6 +413,7 @@ if __name__ == "__main__":
         val_scores   = precomputed_svd["val_scores"]
         svd_accuracy = precomputed_svd["svd_accuracy"]
 
+        svd_accuracy = svd_accuracy[svd_accuracy["direction"] == "asc"]
         svd_accuracy = svd_accuracy.sort_values("step_acc_val", ascending=False)
         svd_outpath = output_dir / f"svd_pooling-{pooling}_seed-{seed}.tsv"
         if svd_outpath.exists():
@@ -426,13 +427,14 @@ if __name__ == "__main__":
         truncate_threshold = 40
         best_accuracy  = (svd_accuracy.groupby("weight")["step_acc_val"]
                            .max().sort_values(ascending=False))
-        best_positions = best_accuracy.keys().to_list()
+        best_positions = best_accuracy.keys().to_list()[:truncate_threshold]
         print(f"Selected positions: {best_positions}\n")
 
         metric_rows = []
-        for layer_idx, threshold in itertools.product(best_positions, args.thresholds):
+        inner_combos = list(itertools.product(best_positions, args.thresholds))
+        for icb, (layer_idx, threshold) in tqdm(enumerate(inner_combos)):
             print("---" * 20)
-            print(f"POSITION: {layer_idx} | Wild THRESHOLD: {threshold}")
+            print(f"COMBO: [{icb + 1}/{len(inner_combos)}] | POSITION: {layer_idx} | Wild THRESHOLD: {threshold}")
             if threshold == 0.0: mode = "oracle" # --> for oracle training
             else:                mode = "pseudo" # --> for pseudo label training
 
@@ -449,7 +451,7 @@ if __name__ == "__main__":
             best_val_config  = prepared_data["best_config"]
 
             assert float(best_accuracy[layer_idx]) == best_val_config['step_acc'], \
-                "Two SVD computations seem to diverge, check prepare_data vs. precompute_svd."
+            "Two SVD computations seem to diverge, check prepare_data vs. precompute_svd."
 
             seed_everything(seed)
             clf = MLPClassifier(
