@@ -1,0 +1,117 @@
+[ww] qwen3.5-9b/algorithm-generated: base step@1/3/5=0.3915/0.7196/0.9259  soap step@1/3/5=0.4762/0.7460/0.9101
+[ww] qwen3.5-9b/hand-crafted: base step@1/3/5=0.3333/0.4368/0.4943  soap step@1/3/5=0.3448/0.4253/0.5057
+[ww] deepseek-8b/algorithm-generated: base step@1/3/5=0.3862/0.7249/0.9153  soap step@1/3/5=0.4550/0.7619/0.9312
+[ww] deepseek-8b/hand-crafted: base step@1/3/5=0.2874/0.4253/0.5977  soap step@1/3/5=0.2874/0.4253/0.5977
+[ww-gt] qwen3.5-9b/algorithm-generated: base step@1/3/5=0.4127/0.7407/0.8889  soap step@1/3/5=0.4339/0.6455/0.8360
+[ww-gt] qwen3.5-9b/hand-crafted: base step@1/3/5=0.3333/0.4713/0.5287  soap step@1/3/5=0.3448/0.4598/0.5172
+[ww-gt] deepseek-8b/algorithm-generated: base step@1/3/5=0.4021/0.7143/0.9206  soap step@1/3/5=0.4497/0.6455/0.8624
+[ww-gt] deepseek-8b/hand-crafted: base step@1/3/5=0.2989/0.4368/0.6207  soap step@1/3/5=0.2989/0.4368/0.6207
+[traceelephant] qwen3.5-9b/magentic: base step@1/3/5=0.2101/0.3116/0.4130  soap step@1/3/5=0.2319/0.3261/0.4275
+[traceelephant] qwen3.5-9b/captain: base step@1/3/5=0.3333/0.6047/0.7519  soap step@1/3/5=0.3566/0.6357/0.7597
+[traceelephant] deepseek-8b/magentic: base step@1/3/5=0.2971/0.3478/0.4783  soap step@1/3/5=0.3043/0.3913/0.4420
+[traceelephant] deepseek-8b/captain: base step@1/3/5=0.4031/0.5814/0.7597  soap step@1/3/5=0.4264/0.6202/0.7829
+[traceelephant-gt] qwen3.5-9b/magentic: base step@1/3/5=0.1594/0.2609/0.3623  soap step@1/3/5=0.2101/0.3116/0.3623
+[traceelephant-gt] qwen3.5-9b/captain: base step@1/3/5=0.3256/0.5426/0.8140  soap step@1/3/5=0.3643/0.6357/0.8527
+[traceelephant-gt] deepseek-8b/magentic: base step@1/3/5=0.3551/0.4203/0.5145  soap step@1/3/5=0.3696/0.4203/0.5000
+[traceelephant-gt] deepseek-8b/captain: base step@1/3/5=0.4109/0.6667/0.8062  soap step@1/3/5=0.4264/0.7132/0.8062
+[correct-error] qwen3.5-9b/arc: base step@1/3/5=0.8136/0.8640/0.8838  soap step@1/3/5=0.8158/0.8706/0.8947
+[correct-error] qwen3.5-9b/gaia: base step@1/3/5=0.6800/0.8533/0.9600  soap step@1/3/5=0.6933/0.8533/0.9333
+[correct-error] qwen3.5-9b/hotpot: base step@1/3/5=0.4567/0.6990/0.7751  soap step@1/3/5=0.4648/0.7059/0.7866
+[correct-error] qwen3.5-9b/math500: base step@1/3/5=0.6118/0.8270/0.8819  soap step@1/3/5=0.6118/0.8270/0.8819
+[correct-error] qwen3.5-9b/mmlu_pro: base step@1/3/5=0.7971/0.9058/0.9203  soap step@1/3/5=0.7971/0.9058/0.9203
+[correct-error] qwen3.5-9b/musique: base step@1/3/5=0.4359/0.7009/0.8120  soap step@1/3/5=0.4359/0.7009/0.8120
+[correct-error] qwen3.5-9b/wikimqa: base step@1/3/5=0.5014/0.6939/0.7575  soap step@1/3/5=0.5059/0.7094/0.7729
+[correct-error] deepseek-8b/arc: base step@1/3/5=0.8772/0.9057/0.9254  soap step@1/3/5=0.8772/0.9057/0.9254
+[correct-error] deepseek-8b/gaia: base step@1/3/5=0.7200/0.8667/0.9333  soap step@1/3/5=0.7200/0.8667/0.9333
+[correct-error] deepseek-8b/hotpot: base step@1/3/5=0.5271/0.7324/0.8293  soap step@1/3/5=0.5271/0.7324/0.8293
+[correct-error] deepseek-8b/math500: base step@1/3/5=0.5992/0.8481/0.9283  soap step@1/3/5=0.5992/0.8481/0.9283
+[correct-error] deepseek-8b/mmlu_pro: base step@1/3/5=0.8043/0.9130/0.9348  soap step@1/3/5=0.8043/0.9130/0.9348
+[correct-error] deepseek-8b/musique: base step@1/3/5=0.4466/0.6581/0.7949  soap step@1/3/5=0.4466/0.6581/0.7949
+[correct-error] deepseek-8b/wikimqa: base step@1/3/5=0.5186/0.6730/0.7448  soap step@1/3/5=0.5531/0.6966/0.7729
+[correct-error-gt] qwen3.5-9b/arc: base step@1/3/5=0.8136/0.8640/0.8838  soap step@1/3/5=0.8180/0.8706/0.8991
+[correct-error-gt] qwen3.5-9b/gaia: base step@1/3/5=0.6800/0.8133/0.8667  soap step@1/3/5=0.6800/0.7867/0.8667
+[correct-error-gt] qwen3.5-9b/hotpot: base step@1/3/5=0.4521/0.6967/0.7878  soap step@1/3/5=0.4521/0.6967/0.7878
+[correct-error-gt] qwen3.5-9b/math500: base step@1/3/5=0.6245/0.8101/0.8692  soap step@1/3/5=0.6245/0.8101/0.8692
+[correct-error-gt] qwen3.5-9b/mmlu_pro: base step@1/3/5=0.7101/0.8768/0.9710  soap step@1/3/5=0.7101/0.8768/0.9710
+[correct-error-gt] qwen3.5-9b/musique: base step@1/3/5=0.4487/0.7009/0.8034  soap step@1/3/5=0.4487/0.7009/0.8034
+[correct-error-gt] qwen3.5-9b/wikimqa: base step@1/3/5=0.4923/0.6821/0.7439  soap step@1/3/5=0.5077/0.7094/0.7593
+[correct-error-gt] deepseek-8b/arc: base step@1/3/5=0.8750/0.9211/0.9342  soap step@1/3/5=0.8750/0.9211/0.9342
+[correct-error-gt] deepseek-8b/gaia: base step@1/3/5=0.7200/0.8533/0.9067  soap step@1/3/5=0.7200/0.8533/0.9067
+[correct-error-gt] deepseek-8b/hotpot: base step@1/3/5=0.5317/0.7347/0.8339  soap step@1/3/5=0.5317/0.7347/0.8339
+[correct-error-gt] deepseek-8b/math500: base step@1/3/5=0.6245/0.8439/0.9030  soap step@1/3/5=0.6245/0.8439/0.9030
+[correct-error-gt] deepseek-8b/mmlu_pro: base step@1/3/5=0.7971/0.9058/0.9420  soap step@1/3/5=0.7971/0.9058/0.9420
+[correct-error-gt] deepseek-8b/musique: base step@1/3/5=0.4637/0.6880/0.7906  soap step@1/3/5=0.4637/0.6880/0.7906
+[correct-error-gt] deepseek-8b/wikimqa: base step@1/3/5=0.5250/0.6667/0.7511  soap step@1/3/5=0.5513/0.6966/0.7757
+wrote results-ablations/a9_parts/soap.tsv  (88 rows)
+
+=== with_gt=False backbone=deepseek-8b step@1 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                87.72                72.0                 52.71                  59.92                   80.43                  44.66                  51.86                  40.31                   29.71                   38.62            28.74
+soap                87.72                72.0                 52.71                  59.92                   80.43                  44.66                  55.31                  42.64                   30.43                   45.50            28.74
+
+=== with_gt=False backbone=deepseek-8b step@3 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                90.57               86.67                 73.24                  84.81                    91.3                  65.81                  67.30                  58.14                   34.78                   72.49            42.53
+soap                90.57               86.67                 73.24                  84.81                    91.3                  65.81                  69.66                  62.02                   39.13                   76.19            42.53
+
+=== with_gt=False backbone=deepseek-8b step@5 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                92.54               93.33                 82.93                  92.83                   93.48                  79.49                  74.48                  75.97                   47.83                   91.53            59.77
+soap                92.54               93.33                 82.93                  92.83                   93.48                  79.49                  77.29                  78.29                   44.20                   93.12            59.77
+
+=== with_gt=False backbone=qwen3.5-9b step@1 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                81.36               68.00                 45.67                  61.18                   79.71                  43.59                  50.14                  33.33                   21.01                   39.15            33.33
+soap                81.58               69.33                 46.48                  61.18                   79.71                  43.59                  50.59                  35.66                   23.19                   47.62            34.48
+
+=== with_gt=False backbone=qwen3.5-9b step@3 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                86.40               85.33                 69.90                   82.7                   90.58                  70.09                  69.39                  60.47                   31.16                   71.96            43.68
+soap                87.06               85.33                 70.59                   82.7                   90.58                  70.09                  70.94                  63.57                   32.61                   74.60            42.53
+
+=== with_gt=False backbone=qwen3.5-9b step@5 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                88.38               96.00                 77.51                  88.19                   92.03                   81.2                  75.75                  75.19                   41.30                   92.59            49.43
+soap                89.47               93.33                 78.66                  88.19                   92.03                   81.2                  77.29                  75.97                   42.75                   91.01            50.57
+
+=== with_gt=True backbone=deepseek-8b step@1 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                 87.5                72.0                 53.17                  62.45                   79.71                  46.37                  52.50                  41.09                   35.51                   40.21            29.89
+soap                 87.5                72.0                 53.17                  62.45                   79.71                  46.37                  55.13                  42.64                   36.96                   44.97            29.89
+
+=== with_gt=True backbone=deepseek-8b step@3 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                92.11               85.33                 73.47                  84.39                   90.58                   68.8                  66.67                  66.67                   42.03                   71.43            43.68
+soap                92.11               85.33                 73.47                  84.39                   90.58                   68.8                  69.66                  71.32                   42.03                   64.55            43.68
+
+=== with_gt=True backbone=deepseek-8b step@5 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                93.42               90.67                 83.39                   90.3                    94.2                  79.06                  75.11                  80.62                   51.45                   92.06            62.07
+soap                93.42               90.67                 83.39                   90.3                    94.2                  79.06                  77.57                  80.62                   50.00                   86.24            62.07
+
+=== with_gt=True backbone=qwen3.5-9b step@1 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                81.36                68.0                 45.21                  62.45                   71.01                  44.87                  49.23                  32.56                   15.94                   41.27            33.33
+soap                81.80                68.0                 45.21                  62.45                   71.01                  44.87                  50.77                  36.43                   21.01                   43.39            34.48
+
+=== with_gt=True backbone=qwen3.5-9b step@3 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                86.40               81.33                 69.67                  81.01                   87.68                  70.09                  68.21                  54.26                   26.09                   74.07            47.13
+soap                87.06               78.67                 69.67                  81.01                   87.68                  70.09                  70.94                  63.57                   31.16                   64.55            45.98
+
+=== with_gt=True backbone=qwen3.5-9b step@5 (%) ===
+cell    correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                  
+base                88.38               86.67                 78.78                  86.92                    97.1                  80.34                  74.39                  81.40                   36.23                   88.89            52.87
+soap                89.91               86.67                 78.78                  86.92                    97.1                  80.34                  75.93                  85.27                   36.23                   83.60            51.72

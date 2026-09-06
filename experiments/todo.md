@@ -4,7 +4,8 @@ Every pending experiment for the manuscript, made concrete: data, splits, backbo
 anchor configs, procedure, and cost. Agreed 2026-08-13; revised 2026-08-17 (coverage,
 naming, orientations, grids, A7 re-selection); 2026-08-23 (B1 baseline rows);
 2026-08-25 (E2 concretized on the gathered synthetic corpora); 2026-08-27 (S1 scalability
-planned). The two main experiments fill
+planned); 2026-09-03 (B2 open-backbone prompting rows); 2026-09-06 (B3 ErrorProbe,
+paper mode). The two main experiments fill
 `fig:transfer` and `tab:synth`; the seven ablations fill `tab:scorefn`, `tab:weights`,
 `tab:position`, `tab:attnsel`, `fig:gamma`, `fig:layers`, `fig:datasize`; S1 fills
 `fig:scale`.
@@ -774,6 +775,62 @@ coincide with the Table-1 number.
   (DeepSeek WW-HC 1/3: 29.89; TE-Mag 1/3: 31.88) — selection noise on tiny fits,
   worth a caption note.
 
+### A8 — Mean vs last-token pooling (appendix `tab:pooling`)  `[CPU]`  — DONE 2026-09-03
+
+- [x] **Target.** Is mean pooling the right step representation? The extractor
+  stored both poolings, so this is a re-selection on the `last` stores.
+- **Procedure.** Per without-GT cell (both backbones x WW-AG/WW-HC/TE-Cap/TE-Mag),
+  re-select the full config on last-token representations by the standard rule
+  (dense base grid, then the backprop rescore grid) — A7's machinery at fraction 1
+  with `POOLING="last"`. The `mean` rows are Table 1's selection rows.
+- **Results** — `results-ablations/a8_pooling.tsv` (`scripts/ablations/a8_pooling.py`;
+  merged from `a8_parts/`). Step acc %, SOAP (base in parentheses):
+
+  | pooling | Qwen WW-AG | Qwen WW-HC | Qwen TE-Cap | Qwen TE-Mag | DS WW-AG | DS WW-HC | DS TE-Cap | DS TE-Mag |
+  |---|---|---|---|---|---|---|---|---|
+  | mean (= Table 1) | 47.62 (39.15) | 34.48 (33.33) | 35.66 (33.33) | 23.19 (21.01) | 45.50 (38.62) | 28.74 (28.74) | 42.64 (40.31) | 30.43 (29.71) |
+  | last token | 29.63 (29.10) | 24.14 (22.99) | 25.58 (24.03) | 23.19 (21.01) | 30.69 (29.10) | 22.99 (22.99) | 24.81 (24.81) | 26.09 (24.64) |
+
+  Reading: mean pooling wins everywhere but TE-Mag (tie on Qwen); the last-token
+  base score loses 8-16 points on WW-AG, WW-HC and TE-Cap even at its own best
+  configuration. Rescoring still lifts last-token scores where gamma>0, from a much
+  lower base.
+
+### A9 — Accuracy at k and MRR for SOAP, OAT, StepFinder (appendix `tab:ranked-step`, `tab:ranked-agent`)  `[CPU]`  — DONE 2026-09-03
+
+- [x] **Target.** Ranked-shortlist quality for the three methods that score every
+  step; the prompting judges emit one verdict and are excluded.
+- **Procedure.** SOAP/base: re-score the anchor per cell (both backbones, all eleven
+  subsets, both GT trees) and rank at k in {1,3,5} plus MRR (`mrr` added to
+  `main/metrics.py`, loop and batch paths, tested). OAT/StepFinder: rank the
+  per-step `scores`/`score_step_indices` stored in their prediction JSONs
+  (`../attrib-prompting/outputs-rb-{nogt,gt}`), descending, earliest tie first; a
+  gold step OAT never scored is a miss at every k; mean over the triple then over
+  the five training seeds. Asserted: SOAP/base step@1 == selection tables;
+  baseline step@1/agent@1 == B1 `by_cell.tsv`.
+- **Results** — `results-ablations/a9_ranked.tsv` (`scripts/ablations/a9_ranked.py`;
+  merged from `a9_parts/`); manuscript table `tables/appendix_ranked.tsv`.
+  Without-GT step acc % at k=1/3/5:
+
+  | qwen3.5-9b | WW-AG | WW-HC | CE | TE-Cap | TE-Mag |
+  |---|---|---|---|---|---|
+  | OAT | 16.72/56.72/86.46 | 10.11/25.75/38.39 | 56.50/74.60/82.18 | 15.35/53.02/73.80 | 18.84/32.17/40.29 |
+  | StepFinder | 15.87/55.24/75.87 | 13.33/29.66/34.48 | 30.03/59.04/68.58 | 18.29/37.21/50.70 | 6.67/17.10/28.12 |
+  | base | 39.15/71.96/92.59 | 33.33/43.68/49.43 | 61.38/79.20/85.58 | 33.33/60.47/75.19 | 21.01/31.16/41.30 |
+  | SOAP | 47.62/74.60/91.01 | 34.48/42.53/50.57 | 61.78/79.61/85.74 | 35.66/63.57/75.97 | 23.19/32.61/42.75 |
+
+  | deepseek-8b | WW-AG | WW-HC | CE | TE-Cap | TE-Mag |
+  |---|---|---|---|---|---|
+  | OAT | 12.70/45.19/83.92 | 15.86/37.01/42.30 | 52.50/74.08/83.17 | 17.98/47.13/75.04 | 13.04/31.01/41.45 |
+  | StepFinder | 18.94/60.32/78.94 | 10.80/21.61/29.20 | 36.91/63.05/74.12 | 14.73/41.24/58.60 | 4.20/11.01/21.45 |
+  | base | 38.62/72.49/91.53 | 28.74/42.53/59.77 | 64.19/79.96/87.01 | 40.31/58.14/75.97 | 29.71/34.78/47.83 |
+  | SOAP | 45.50/76.19/93.12 | 28.74/42.53/59.77 | 64.68/80.30/87.41 | 42.64/62.02/78.29 | 30.43/39.13/44.20 |
+
+  MRR (WW-AG, Qwen): OAT 41.46, StepFinder 41.23, base 58.83, SOAP 63.92.
+  Reading: SOAP keeps its lead at every k; rescoring helps at k=1 and 3 and is
+  within a point of base at k=5 (it moves the gold step to the top, not the tail).
+  Agent@k saturates for everyone by k=3 (two- or three-agent trajectories).
+
 ## Baselines
 
 ### B1 — Representation-based baselines: OAT and StepFinder (`tab:main`, `tab:main-gt`)  `[CPU; predictions from ../attrib-prompting]`  — DONE 2026-08-23
@@ -918,6 +975,144 @@ coincide with the Table-1 number.
   the `\TODO` in Setup; the embedding-encoder StepFinder row (own strand or
   footnote); the with-GT DeepSeek rows for Appendix `app:gt`, whose table is still
   the old placeholder layout.
+
+### B2 — Prompt-based baselines on the open backbones (`tab:main`)  `[CPU; predictions from ../attrib-prompting]`  — DONE 2026-09-03
+
+- [x] **Target.** Fill the prompting group of Table 1's Qwen3.5-9B and
+  DeepSeek-R1-Distill-Llama-8B blocks: the six prompt-based methods with the
+  backbone itself as the judge, so every row of a block runs on one model.
+- **Scope.** All five subsets, both open judges, without-GT. Nothing runs here:
+  the predictions live in `../attrib-prompting/outputs-nogt/` (judges
+  `qwen3.5-9b`, `deepseek-8b`, one JSON per trajectory, the prompting schema);
+  `scripts/prompting/evaluate.py` scores them on the frozen triples with its
+  usual rules (SOAP's test splits, missing prediction = wrong) into
+  `results-prompting/`, and `scripts/tables/open_backbone_rows.py` formats the
+  twelve rows into `tables/open_backbones_{step,agent}_without_gt.tsv`.
+- **With-GT coverage is partial.** The open judges carry with-GT predictions only
+  for All-at-Once / Step-by-Step / Binary Search on four columns (no CE), so
+  `tab:main-gt` gains no open-judge prompting rows yet; the scored partial cells
+  sit in `results-prompting/by_column.tsv` (`with_gt=True`).
+- **Results** — step acc %, mean over the triple (full precision in
+  `results-prompting/by_column.tsv`; SOAP rows repeat Table 1 for reference):
+
+  | qwen3.5-9b judge | WW-AG | WW-HC | CE | TE-Cap | TE-Mag |
+  |---|---|---|---|---|---|
+  | All-at-Once | 17.46 | 11.49 | 33.47 | 4.65 | 1.45 |
+  | Step-by-Step | 10.58 | 16.09 | 31.15 | 14.73 | 10.87 |
+  | Binary Search | 2.65 | 13.79 | 59.92 | 0.78 | 5.07 |
+  | CORRECT | 29.10 | 3.45 | 36.35 | 7.75 | 2.90 |
+  | CHIEF | 28.57 | 3.45 | 29.39 | 3.88 | 2.17 |
+  | RAFFLES | 46.03 | 27.59 | 73.14 | 29.46 | 23.91 |
+  | SOAP | 47.62 | 34.48 | 61.78 | 35.66 | 23.19 |
+
+  | deepseek-8b judge | WW-AG | WW-HC | CE | TE-Cap | TE-Mag |
+  |---|---|---|---|---|---|
+  | All-at-Once | 7.41 | 5.75 | 21.95 | 4.65 | 2.90 |
+  | Step-by-Step | 16.93 | 9.20 | 9.04 | 11.63 | 4.35 |
+  | Binary Search | 7.94 | 12.64 | 34.15 | 10.08 | 13.77 |
+  | CORRECT | 20.11 | 11.49 | 32.82 | 3.88 | 0.72 |
+  | CHIEF | 17.46 | 2.30 | 8.40 | 7.75 | 9.42 |
+  | RAFFLES | 28.04 | 8.05 | 35.84 | 20.16 | 10.87 |
+  | SOAP | 45.50 | 28.74 | 64.68 | 42.64 | 30.43 |
+
+  **Agent acc %, without GT** (`tables/open_backbones_agent_without_gt.tsv`):
+
+  | qwen3.5-9b judge | WW-AG | WW-HC | CE | TE-Cap | TE-Mag |
+  |---|---|---|---|---|---|
+  | All-at-Once | 56.61 | 48.28 | 81.40 | 62.79 | 62.32 |
+  | Step-by-Step | 19.05 | 47.13 | 35.85 | 51.16 | 65.94 |
+  | Binary Search | 38.10 | 62.07 | 70.70 | 22.48 | 59.42 |
+  | CORRECT | 59.79 | 47.13 | 78.60 | 62.02 | 74.64 |
+  | CHIEF | 50.26 | 54.02 | 74.81 | 65.12 | 74.64 |
+  | RAFFLES | 60.85 | 60.92 | 77.27 | 65.89 | 68.84 |
+
+  | deepseek-8b judge | WW-AG | WW-HC | CE | TE-Cap | TE-Mag |
+  |---|---|---|---|---|---|
+  | All-at-Once | 42.33 | 45.98 | 38.04 | 54.26 | 63.04 |
+  | Step-by-Step | 44.97 | 37.93 | 15.23 | 33.33 | 38.41 |
+  | Binary Search | 28.57 | 48.28 | 53.37 | 44.96 | 69.57 |
+  | CORRECT | 44.97 | 32.18 | 58.67 | 38.76 | 60.87 |
+  | CHIEF | 37.04 | 52.87 | 56.71 | 51.16 | 63.77 |
+  | RAFFLES | 38.10 | 51.72 | 41.01 | 54.26 | 65.94 |
+
+  Reading: RAFFLES is the only prompting method that competes — it overtakes SOAP
+  on two of the ten step cells, Qwen CE (73.14 vs 61.78) and Qwen TE-Mag (23.91
+  vs 23.19), and lands within 1.6 points on Qwen WW-AG; SOAP keeps every DeepSeek
+  cell by wide margins (min gap 16.7, WW-AG). Every other method sits far below
+  its GPT-4o strand, so judge capacity, not the protocol, carries them.
+- **Manuscript edits — APPLIED 2026-09-03.** Table 1: the twelve `\PH` prompting
+  rows filled; best/second markers recomputed within each open-backbone block —
+  RAFFLES takes best on CE and TE-Mag in the Qwen block (SOAP drops to second
+  there), and the training-based rows lose the seconds they held while the
+  prompting group was empty. `tab:main-gt` untouched (partial coverage, above).
+
+### B3 — ErrorProbe on the open backbones (`tab:main`, `tab:main-gt`)  `[CPU; predictions from ../attrib-prompting]`  — DONE 2026-09-06
+
+- [x] **Target.** The ErrorProbe~\citep{errorprobe} row of Tables 1–2 (Li et al.,
+  Findings of ACL 2026; reproduced in `../attrib-prompting/baselines/errorprobe/`,
+  modes documented in its README and IMPLEMENTATION.md).
+- **Three modes, one reported.** `errorprobe` (truncated-history, the vendored
+  default: an Analyzer reads the last 15 turns, a Verifier reviews without veto),
+  `errorprobe_bt` (the vendored backward walk), and `errorprobe_paper` (the paper's
+  own pipeline, rebuilt: MAST tagging -> dependency graph + backward trace ->
+  Strategist/Investigator/Arbiter; probes are prompts, no code runs, no memory).
+  The manuscript row reported the truncated mode from 2026-09-05; **since
+  2026-09-06 it reports the paper mode**, which is stronger nearly everywhere on
+  Qwen and on DeepSeek WW-AG/WW-HC/TE-Cap, weaker on Qwen WW-HC (12.64 vs 18.39)
+  and DeepSeek TE-Mag (8.70 vs 17.39).
+- **Scoring.** Same path as B2: predictions in `../attrib-prompting/outputs-nogt/`
+  (without GT) and `outputs/` (with GT); `scripts/prompting/evaluate.py` (method
+  list now includes `errorprobe_paper`) scores them on the frozen triples into
+  `results-prompting/`; `scripts/tables/open_backbone_rows.py` adds the
+  "ErrorProbe (paper)" row to `tables/open_backbones_*.tsv`. Zero missing and zero
+  null-step predictions in every paper-mode cell. With-GT coverage: WW + TE only
+  (no CE), both judges, all three modes.
+- **Results** — step acc %, mean over the triple; SOAP repeats Table 1:
+
+  **Without GT, paper mode (the reported row)**
+
+  | | WW-AG | WW-HC | CE | TE-Cap | TE-Mag |
+  |---|---|---|---|---|---|
+  | qwen3.5-9b | 42.33 | 12.64 | 62.42 | 29.46 | 25.36 |
+  | SOAP (qwen) | 47.62 | 34.48 | 61.78 | 35.66 | 23.19 |
+  | deepseek-8b | 24.34 | 10.34 | 35.97 | 17.05 | 8.70 |
+  | SOAP (deepseek) | 45.50 | 28.74 | 64.68 | 42.64 | 30.43 |
+
+  **Without GT, the unreported modes** (kept in .tex comments)
+
+  | | WW-AG | WW-HC | CE | TE-Cap | TE-Mag |
+  |---|---|---|---|---|---|
+  | truncated / qwen | 20.63 | 18.39 | 53.40 | 21.71 | 21.74 |
+  | truncated / deepseek | 14.29 | 6.90 | 36.25 | 13.18 | 17.39 |
+  | backward / qwen | 5.82 | 11.49 | — | 3.10 | 7.25 |
+  | backward / deepseek | 1.06 | 13.79 | — | 0.00 | 3.62 |
+
+  **With GT, paper mode** (Table 2 shows Qwen WW only)
+
+  | | WW-AG | WW-HC | TE-Cap | TE-Mag |
+  |---|---|---|---|---|
+  | qwen3.5-9b | 43.92 | 16.09 | 31.78 | 23.19 |
+  | deepseek-8b | 18.52 | 14.94 | 21.71 | 11.59 |
+
+  Agent accuracies sit in `tables/open_backbones_agent_*.tsv` and
+  `results-prompting/by_column.tsv`.
+- **Ranking changes the swap caused.** Table 1, Qwen block: ErrorProbe takes
+  second on CE from SOAP (62.42 vs 61.78) and best on TE-Mag (25.36 > RAFFLES
+  23.91 > SOAP 23.19); on TE-Cap it ties RAFFLES exactly (38/129 = 29.46), both
+  underlined. DeepSeek block: TE-Mag second returns to Binary Search (13.77).
+  Table 2: WW-AG now reads RAFFLES 46.56 best, ErrorProbe 43.92 second, SOAP
+  43.39 third.
+- **Manuscript edits — APPLIED 2026-09-06.** `tab:main` (both open blocks) and
+  `tab:main-gt`: ErrorProbe rows now carry the paper mode, markers recomputed as
+  above; truncated/backward numbers preserved as dated comments; GPT-4o row stays
+  `\PH` (no GPT-4o ErrorProbe run exists). **Prose now stale, NOT edited**: the
+  tab:main-gt paragraph still calls SOAP "second best on WW-AG, where only
+  RAFFLES surpasses it"; the tab:main paragraph still claims SOAP is best "on all
+  five subsets with both backbones" (already false since B2's RAFFLES fill);
+  the Baselines paragraph still describes ErrorProbe as an "analyzer--verifier
+  diagnoser", which names the truncated mode, not the reported paper pipeline.
+  Appendix (std/agent tables, `tab:gt-full`, GPT-5, `app:baselines` prose) still
+  lacks ErrorProbe entirely, as before.
 
 ## Deferred (in the plan, blocked on inputs)
 

@@ -1,0 +1,17 @@
+Setting	Backbone	Method	Selection	WW-AG	WW-HC	CE	TE-Cap	TE-Mag
+without GT	Qwen3.5-9B	SOAP (w/o rescoring)	test	39.15	33.33	61.38	33.33	21.01
+without GT	Qwen3.5-9B	SOAP (w/o rescoring)	validation	32.28	26.44	59.47	19.38	8.70
+without GT	Qwen3.5-9B	SOAP	test	47.62	34.48	61.78	35.66	23.19
+without GT	Qwen3.5-9B	SOAP	validation	37.57	25.29	59.35	22.48	8.70
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	test	38.62	28.74	64.19	40.31	29.71
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	validation	34.39	24.14	58.47	31.01	23.19
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP	test	45.50	28.74	64.68	42.64	30.43
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP	validation	40.74	24.14	59.15	31.78	23.19
+with GT	Qwen3.5-9B	SOAP (w/o rescoring)	test	41.27	33.33	60.30	32.56	15.94
+with GT	Qwen3.5-9B	SOAP (w/o rescoring)	validation	38.10	28.74	58.41	19.38	5.07
+with GT	Qwen3.5-9B	SOAP	test	43.39	34.48	60.59	36.43	21.01
+with GT	Qwen3.5-9B	SOAP	validation	39.68	24.14	57.92	22.48	5.80
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	test	40.21	29.89	64.81	41.09	35.51
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	validation	34.92	24.14	61.57	21.71	33.33
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP	test	44.97	29.89	65.19	42.64	36.96
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP	validation	34.92	24.14	61.61	28.68	33.33

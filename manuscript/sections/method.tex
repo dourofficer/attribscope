@@ -55,21 +55,25 @@ Figure~\ref{fig:overview} summarizes the method.
 % and weights illustrative). Supersedes assets/soap_overview.pdf (2026-08-25).
 \begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{assets/soap_framework.pdf}
+\includegraphics[width=\textwidth]{assets/soap_framework_v3.pdf}
   \vspace{-0.6cm}
-  \caption{\small \textbf{Overview of \soap{}.}
-  \emph{During fitting}, a frozen proxy model $\proxy$ encodes every step of the
-  unlabeled reference failures $\mathcal{D}_{\mathrm{fail}}$, and the SVD of the
-  stacked representations yields a spectral band $\mathcal{C}$ capturing the
-  common mode of ordinary steps, onto which decisive errors project weakly.
-  \emph{During localization}, the same proxy encodes the failed trajectory:
-  each step receives the spectral base score      
-  $\Sbase(s_t)=1/(\pi_{\mathcal{C}}(v_t)+\epsilon)$, and attention-derived 
-  dependency weights $w_{i,t}$ propagate downstream error evidence back to the
-  predecessors it builds on, moving the argmax of the rescored $\Stilde$ from a
-  late symptom onto the decisive error $t^\star$; the responsible agent follows
-  as $\hat{a}=a_{\hat{t}}$. \soap{} involves no step labels, fine-tuning, or
-  LLM prompting.} 
+  \caption{\small 
+  \textbf{Overview of \soap{}.}
+  % \emph{During fitting}, a frozen proxy model $\proxy$ encodes every step of the
+  % unlabeled reference failures $\mathcal{D}_{\mathrm{fail}}$, and the SVD of the
+  % stacked representations yields a spectral band $\mathcal{C}$ capturing the
+  % common mode of ordinary steps, onto which decisive errors project weakly.
+  % \emph{During localization}, the same proxy encodes the failed trajectory:
+  % each step receives the spectral base score      
+  % $\Sbase(s_t)=1/(\pi_{\mathcal{C}}(v_t)+\epsilon)$, and attention-derived 
+  % dependency weights $w_{i,t}$ propagate downstream error evidence back to the
+  % predecessors it builds on, moving the argmax of the rescored $\Stilde$ from a
+  % late symptom onto the decisive error $t^\star$; the responsible agent follows
+  % as $\hat{a}=a_{\hat{t}}$. \soap{} involves no step labels, fine-tuning, or
+  % LLM prompting. 
+  \note{New layout for the main figure. Under refinement: too much text, need more compact, avoid overlapping components.}
+  \textcolor{red}{the fonts are not proper, please avoid purely relying AI for this. characters are stitched together.} 
+  }
 \label{fig:overview}
 \vspace{-0.5cm}
 \end{figure}

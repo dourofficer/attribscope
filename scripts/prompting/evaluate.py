@@ -57,11 +57,19 @@ SETTINGS = [("outputs-nogt", False, "results-nogt", ""),
 # closed-source ones answer the manuscript's GPT-4o block; the two open ones are
 # the backbones SOAP itself runs on, so their prompting rows sit in the same
 # block as SOAP and share its test splits.
-JUDGES = ["gpt-4o", "gpt-5", "qwen3.5-9b", "deepseek-8b"]
+# `qwen3.5-9b-weak` is the same Qwen checkpoint decoded on a handicapped budget
+# (512 new tokens, temperature 1.0, top-p 0.95, 16k window clipped from the
+# front); ErrorProbe runs only.
+JUDGES = ["gpt-4o", "gpt-5", "qwen3.5-9b", "deepseek-8b", "qwen3.5-9b-weak"]
 # gpt-5 x correct-error has no `chief` run — it was excluded as too costly, so
 # that cell stays blank rather than missing.
+# ErrorProbe ships three paths as separate method directories:
+# `errorprobe` reads the last 15 turns, `errorprobe_bt` walks the whole trace,
+# `errorprobe_paper` rebuilds the paper's tag->trace->team pipeline (the
+# manuscript's reported mode since 2026-09-06). The backward walk cannot
+# batch, so it is run on ww and traceelephant only.
 METHODS = ["all_at_once", "step_by_step", "binary_search", "correct", "chief",
-           "raffles"]
+           "raffles", "errorprobe", "errorprobe_bt", "errorprobe_paper"]
 DATASETS = ["ww", "traceelephant", "correct-error"]
 SPLIT_MODEL = "qwen3.5-9b"      # id source; every backbone has the same file list
 

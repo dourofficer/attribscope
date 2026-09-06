@@ -1,0 +1,9 @@
+Backbone	Pooling	Method	WW-AG	WW-HC	TE-Cap	TE-Mag	config WW-AG	config WW-HC	config TE-Cap	config TE-Mag
+Qwen3.5-9B	mean	SOAP (w/o rescoring)	39.15	33.33	33.33	21.01	act/27 [1,7)	act/31 [0,5)	act/23 [0,3)	act/23 [0,2)
+Qwen3.5-9B	mean	SOAP	47.62	34.48	35.66	23.19	act/27 [1,7) 0-2 γ=0.6 w=1	act/31 [0,5) 4-6 γ=0.1 w=2	act/23 [0,3) 6-8 γ=0.1 w=5	act/23 [0,2) 6-8 γ=1.0 w=4
+Qwen3.5-9B	last	SOAP (w/o rescoring)	29.10	22.99	24.03	21.01	act/15 [8,13)	act/31 [0,6)	act/31 [0,1)	act/7 [0,1)
+Qwen3.5-9B	last	SOAP	29.63	24.14	25.58	23.19	act/15 [8,13) 6-8 γ=0.1 w=all	act/31 [0,6) 0-2 γ=0.1 w=1	act/31 [0,1) 4-6 γ=1.0 w=1	act/7 [0,1) 0-2 γ=0.2 w=1
+DeepSeek-R1-Distill-Llama-8B	mean	SOAP (w/o rescoring)	38.62	28.74	40.31	29.71	act/3 [1,5)	act/31 [0,4)	act/31_normed [0,18)	act/10 [0,4)
+DeepSeek-R1-Distill-Llama-8B	mean	SOAP	45.50	28.74	42.64	30.43	act/3 [1,5) 24-32 γ=1.0 w=1	act/31 [0,4) 8-16 γ=0.0 w=all	act/31_normed [0,18) 8-16 γ=0.2 w=all	act/10 [0,4) 24-32 γ=0.1 w=1
+DeepSeek-R1-Distill-Llama-8B	last	SOAP (w/o rescoring)	29.10	22.99	24.81	24.64	act/31_normed [1,4)	act/16 [0,6)	act/2 [0,3)	act/5 [0,10)
+DeepSeek-R1-Distill-Llama-8B	last	SOAP	30.69	22.99	24.81	26.09	act/31_normed [1,4) 24-32 γ=0.6 w=1	act/16 [0,6) 8-16 γ=0.0 w=all	act/2 [0,3) 8-16 γ=0.0 w=all	act/5 [0,10) 0-8 γ=0.4 w=2

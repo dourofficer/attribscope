@@ -5,9 +5,24 @@ Qwen3.5-9B	Binary Search	2.65	13.79	59.92	0.78	5.07
 Qwen3.5-9B	CORRECT	29.10	3.45	36.35	7.75	2.90
 Qwen3.5-9B	CHIEF	28.57	3.45	29.39	3.88	2.17
 Qwen3.5-9B	RAFFLES	46.03	27.59	73.14	29.46	23.91
+Qwen3.5-9B	ErrorProbe	20.63	18.39	53.40	21.71	21.74
+Qwen3.5-9B	ErrorProbe (backward)	5.82	11.49		3.10	7.25
+Qwen3.5-9B	ErrorProbe (paper)	41.80	21.84	63.75	29.46	22.46
 DeepSeek-R1-Distill-Llama-8B	All-at-Once	7.41	5.75	21.95	4.65	2.90
 DeepSeek-R1-Distill-Llama-8B	Step-by-Step	16.93	9.20	9.04	11.63	4.35
 DeepSeek-R1-Distill-Llama-8B	Binary Search	7.94	12.64	34.15	10.08	13.77
 DeepSeek-R1-Distill-Llama-8B	CORRECT	20.11	11.49	32.82	3.88	0.72
 DeepSeek-R1-Distill-Llama-8B	CHIEF	17.46	2.30	8.40	7.75	9.42
-DeepSeek-R1-Distill-Llama-8B	RAFFLES	28.04	8.05	35.84	20.16	10.87
+DeepSeek-R1-Distill-Llama-8B	RAFFLES	28.04	8.05	41.60	20.16	10.87
+DeepSeek-R1-Distill-Llama-8B	ErrorProbe	14.29	6.90	36.25	13.18	17.39
+DeepSeek-R1-Distill-Llama-8B	ErrorProbe (backward)	1.06	13.79		0.00	3.62
+DeepSeek-R1-Distill-Llama-8B	ErrorProbe (paper)	24.34	10.34	35.97	17.05	8.70
+Qwen3.5-9B (weak)	All-at-Once					
+Qwen3.5-9B (weak)	Step-by-Step					
+Qwen3.5-9B (weak)	Binary Search					
+Qwen3.5-9B (weak)	CORRECT					
+Qwen3.5-9B (weak)	CHIEF					
+Qwen3.5-9B (weak)	RAFFLES					
+Qwen3.5-9B (weak)	ErrorProbe	19.58	24.14	49.24	21.71	17.39
+Qwen3.5-9B (weak)	ErrorProbe (backward)	9.52	14.94		3.10	10.14
+Qwen3.5-9B (weak)	ErrorProbe (paper)	39.68	21.84	55.03	23.26	20.29

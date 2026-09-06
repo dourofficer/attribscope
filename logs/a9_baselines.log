@@ -1,0 +1,257 @@
+  [miss] outputs-rb/ww/algorithm-generated/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/ww/algorithm-generated/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/ww/algorithm-generated/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/ww/algorithm-generated/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/ww/algorithm-generated/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/ww/algorithm-generated/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/ww/algorithm-generated/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/ww/algorithm-generated/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/ww/algorithm-generated/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/ww/algorithm-generated/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/ww/algorithm-generated/deepseek-8b/oat.s42
+  [miss] outputs-rb/ww/algorithm-generated/deepseek-8b/oat.s43
+  [miss] outputs-rb/ww/algorithm-generated/deepseek-8b/oat.s44
+  [miss] outputs-rb/ww/algorithm-generated/deepseek-8b/oat.s45
+  [miss] outputs-rb/ww/algorithm-generated/deepseek-8b/oat.s46
+  [miss] outputs-rb/ww/algorithm-generated/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/ww/algorithm-generated/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/ww/algorithm-generated/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/ww/algorithm-generated/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/ww/algorithm-generated/deepseek-8b/stepfinder.s46
+  [miss] outputs-rb/ww/hand-crafted/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/ww/hand-crafted/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/ww/hand-crafted/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/ww/hand-crafted/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/ww/hand-crafted/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/ww/hand-crafted/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/ww/hand-crafted/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/ww/hand-crafted/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/ww/hand-crafted/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/ww/hand-crafted/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/ww/hand-crafted/deepseek-8b/oat.s42
+  [miss] outputs-rb/ww/hand-crafted/deepseek-8b/oat.s43
+  [miss] outputs-rb/ww/hand-crafted/deepseek-8b/oat.s44
+  [miss] outputs-rb/ww/hand-crafted/deepseek-8b/oat.s45
+  [miss] outputs-rb/ww/hand-crafted/deepseek-8b/oat.s46
+  [miss] outputs-rb/ww/hand-crafted/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/ww/hand-crafted/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/ww/hand-crafted/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/ww/hand-crafted/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/ww/hand-crafted/deepseek-8b/stepfinder.s46
+  [miss] outputs-rb/traceelephant/magentic/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/traceelephant/magentic/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/traceelephant/magentic/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/traceelephant/magentic/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/traceelephant/magentic/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/traceelephant/magentic/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/traceelephant/magentic/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/traceelephant/magentic/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/traceelephant/magentic/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/traceelephant/magentic/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/traceelephant/magentic/deepseek-8b/oat.s42
+  [miss] outputs-rb/traceelephant/magentic/deepseek-8b/oat.s43
+  [miss] outputs-rb/traceelephant/magentic/deepseek-8b/oat.s44
+  [miss] outputs-rb/traceelephant/magentic/deepseek-8b/oat.s45
+  [miss] outputs-rb/traceelephant/magentic/deepseek-8b/oat.s46
+  [miss] outputs-rb/traceelephant/magentic/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/traceelephant/magentic/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/traceelephant/magentic/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/traceelephant/magentic/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/traceelephant/magentic/deepseek-8b/stepfinder.s46
+  [miss] outputs-rb/traceelephant/captain/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/traceelephant/captain/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/traceelephant/captain/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/traceelephant/captain/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/traceelephant/captain/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/traceelephant/captain/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/traceelephant/captain/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/traceelephant/captain/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/traceelephant/captain/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/traceelephant/captain/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/traceelephant/captain/deepseek-8b/oat.s42
+  [miss] outputs-rb/traceelephant/captain/deepseek-8b/oat.s43
+  [miss] outputs-rb/traceelephant/captain/deepseek-8b/oat.s44
+  [miss] outputs-rb/traceelephant/captain/deepseek-8b/oat.s45
+  [miss] outputs-rb/traceelephant/captain/deepseek-8b/oat.s46
+  [miss] outputs-rb/traceelephant/captain/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/traceelephant/captain/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/traceelephant/captain/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/traceelephant/captain/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/traceelephant/captain/deepseek-8b/stepfinder.s46
+  [miss] outputs-rb/correct-error/arc/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/correct-error/arc/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/correct-error/arc/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/correct-error/arc/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/correct-error/arc/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/correct-error/arc/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/correct-error/arc/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/correct-error/arc/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/correct-error/arc/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/correct-error/arc/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/correct-error/arc/deepseek-8b/oat.s42
+  [miss] outputs-rb/correct-error/arc/deepseek-8b/oat.s43
+  [miss] outputs-rb/correct-error/arc/deepseek-8b/oat.s44
+  [miss] outputs-rb/correct-error/arc/deepseek-8b/oat.s45
+  [miss] outputs-rb/correct-error/arc/deepseek-8b/oat.s46
+  [miss] outputs-rb/correct-error/arc/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/correct-error/arc/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/correct-error/arc/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/correct-error/arc/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/correct-error/arc/deepseek-8b/stepfinder.s46
+  [miss] outputs-rb/correct-error/gaia/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/correct-error/gaia/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/correct-error/gaia/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/correct-error/gaia/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/correct-error/gaia/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/correct-error/gaia/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/correct-error/gaia/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/correct-error/gaia/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/correct-error/gaia/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/correct-error/gaia/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/correct-error/gaia/deepseek-8b/oat.s42
+  [miss] outputs-rb/correct-error/gaia/deepseek-8b/oat.s43
+  [miss] outputs-rb/correct-error/gaia/deepseek-8b/oat.s44
+  [miss] outputs-rb/correct-error/gaia/deepseek-8b/oat.s45
+  [miss] outputs-rb/correct-error/gaia/deepseek-8b/oat.s46
+  [miss] outputs-rb/correct-error/gaia/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/correct-error/gaia/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/correct-error/gaia/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/correct-error/gaia/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/correct-error/gaia/deepseek-8b/stepfinder.s46
+  [miss] outputs-rb/correct-error/hotpot/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/correct-error/hotpot/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/correct-error/hotpot/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/correct-error/hotpot/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/correct-error/hotpot/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/correct-error/hotpot/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/correct-error/hotpot/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/correct-error/hotpot/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/correct-error/hotpot/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/correct-error/hotpot/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/correct-error/hotpot/deepseek-8b/oat.s42
+  [miss] outputs-rb/correct-error/hotpot/deepseek-8b/oat.s43
+  [miss] outputs-rb/correct-error/hotpot/deepseek-8b/oat.s44
+  [miss] outputs-rb/correct-error/hotpot/deepseek-8b/oat.s45
+  [miss] outputs-rb/correct-error/hotpot/deepseek-8b/oat.s46
+  [miss] outputs-rb/correct-error/hotpot/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/correct-error/hotpot/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/correct-error/hotpot/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/correct-error/hotpot/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/correct-error/hotpot/deepseek-8b/stepfinder.s46
+  [miss] outputs-rb/correct-error/math500/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/correct-error/math500/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/correct-error/math500/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/correct-error/math500/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/correct-error/math500/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/correct-error/math500/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/correct-error/math500/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/correct-error/math500/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/correct-error/math500/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/correct-error/math500/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/correct-error/math500/deepseek-8b/oat.s42
+  [miss] outputs-rb/correct-error/math500/deepseek-8b/oat.s43
+  [miss] outputs-rb/correct-error/math500/deepseek-8b/oat.s44
+  [miss] outputs-rb/correct-error/math500/deepseek-8b/oat.s45
+  [miss] outputs-rb/correct-error/math500/deepseek-8b/oat.s46
+  [miss] outputs-rb/correct-error/math500/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/correct-error/math500/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/correct-error/math500/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/correct-error/math500/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/correct-error/math500/deepseek-8b/stepfinder.s46
+  [miss] outputs-rb/correct-error/mmlu_pro/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/correct-error/mmlu_pro/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/correct-error/mmlu_pro/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/correct-error/mmlu_pro/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/correct-error/mmlu_pro/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/correct-error/mmlu_pro/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/correct-error/mmlu_pro/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/correct-error/mmlu_pro/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/correct-error/mmlu_pro/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/correct-error/mmlu_pro/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/correct-error/mmlu_pro/deepseek-8b/oat.s42
+  [miss] outputs-rb/correct-error/mmlu_pro/deepseek-8b/oat.s43
+  [miss] outputs-rb/correct-error/mmlu_pro/deepseek-8b/oat.s44
+  [miss] outputs-rb/correct-error/mmlu_pro/deepseek-8b/oat.s45
+  [miss] outputs-rb/correct-error/mmlu_pro/deepseek-8b/oat.s46
+  [miss] outputs-rb/correct-error/mmlu_pro/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/correct-error/mmlu_pro/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/correct-error/mmlu_pro/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/correct-error/mmlu_pro/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/correct-error/mmlu_pro/deepseek-8b/stepfinder.s46
+  [miss] outputs-rb/correct-error/musique/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/correct-error/musique/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/correct-error/musique/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/correct-error/musique/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/correct-error/musique/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/correct-error/musique/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/correct-error/musique/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/correct-error/musique/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/correct-error/musique/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/correct-error/musique/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/correct-error/musique/deepseek-8b/oat.s42
+  [miss] outputs-rb/correct-error/musique/deepseek-8b/oat.s43
+  [miss] outputs-rb/correct-error/musique/deepseek-8b/oat.s44
+  [miss] outputs-rb/correct-error/musique/deepseek-8b/oat.s45
+  [miss] outputs-rb/correct-error/musique/deepseek-8b/oat.s46
+  [miss] outputs-rb/correct-error/musique/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/correct-error/musique/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/correct-error/musique/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/correct-error/musique/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/correct-error/musique/deepseek-8b/stepfinder.s46
+  [miss] outputs-rb/correct-error/wikimqa/qwen3.5-9b/oat.s42
+  [miss] outputs-rb/correct-error/wikimqa/qwen3.5-9b/oat.s43
+  [miss] outputs-rb/correct-error/wikimqa/qwen3.5-9b/oat.s44
+  [miss] outputs-rb/correct-error/wikimqa/qwen3.5-9b/oat.s45
+  [miss] outputs-rb/correct-error/wikimqa/qwen3.5-9b/oat.s46
+  [miss] outputs-rb/correct-error/wikimqa/qwen3.5-9b/stepfinder.s42
+  [miss] outputs-rb/correct-error/wikimqa/qwen3.5-9b/stepfinder.s43
+  [miss] outputs-rb/correct-error/wikimqa/qwen3.5-9b/stepfinder.s44
+  [miss] outputs-rb/correct-error/wikimqa/qwen3.5-9b/stepfinder.s45
+  [miss] outputs-rb/correct-error/wikimqa/qwen3.5-9b/stepfinder.s46
+  [miss] outputs-rb/correct-error/wikimqa/deepseek-8b/oat.s42
+  [miss] outputs-rb/correct-error/wikimqa/deepseek-8b/oat.s43
+  [miss] outputs-rb/correct-error/wikimqa/deepseek-8b/oat.s44
+  [miss] outputs-rb/correct-error/wikimqa/deepseek-8b/oat.s45
+  [miss] outputs-rb/correct-error/wikimqa/deepseek-8b/oat.s46
+  [miss] outputs-rb/correct-error/wikimqa/deepseek-8b/stepfinder.s42
+  [miss] outputs-rb/correct-error/wikimqa/deepseek-8b/stepfinder.s43
+  [miss] outputs-rb/correct-error/wikimqa/deepseek-8b/stepfinder.s44
+  [miss] outputs-rb/correct-error/wikimqa/deepseek-8b/stepfinder.s45
+  [miss] outputs-rb/correct-error/wikimqa/deepseek-8b/stepfinder.s46
+wrote results-ablations/a9_parts/baselines.tsv  (44 rows)
+
+=== with_gt=False backbone=deepseek-8b step@1 (%) ===
+cell        correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                      
+oat                     83.03               49.07                 41.13                  51.14                   71.16                  35.17                  36.82                  17.98                   13.04                   12.70            15.86
+stepfinder              64.21               39.47                 19.40                  46.33                   59.42                  17.31                  12.23                  14.73                    4.20                   18.94            10.80
+
+=== with_gt=False backbone=deepseek-8b step@3 (%) ===
+cell        correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                      
+oat                     88.03               78.93                 63.78                  78.40                   89.28                  60.64                  59.53                  47.13                   31.01                   45.19            37.01
+stepfinder              85.57               57.60                 52.36                  81.18                   83.48                  43.85                  37.33                  41.24                   11.01                   60.32            21.61
+
+=== with_gt=False backbone=deepseek-8b step@5 (%) ===
+cell        correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                      
+oat                     90.35               90.93                 75.25                  91.73                   89.86                  74.15                  69.94                  75.04                   41.45                   83.92             42.3
+stepfinder              88.51               66.67                 67.75                  91.81                   89.13                  58.85                  56.09                  58.60                   21.45                   78.94             29.2
+
+=== with_gt=False backbone=qwen3.5-9b step@1 (%) ===
+cell        correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                      
+oat                     83.29               57.07                 45.03                  51.05                   72.90                  42.91                  43.25                  15.35                   18.84                   16.72            10.11
+stepfinder              45.53               32.53                 21.43                  39.16                   38.12                  18.25                  15.22                  18.29                    6.67                   15.87            13.33
+
+=== with_gt=False backbone=qwen3.5-9b step@3 (%) ===
+cell        correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                      
+oat                     85.66               83.73                 64.73                  78.06                   86.96                  62.82                  60.25                  53.02                   32.17                   56.72            25.75
+stepfinder              84.34               58.13                 47.15                  76.03                   75.22                  37.22                  35.15                  37.21                   17.10                   55.24            29.66
+
+=== with_gt=False backbone=qwen3.5-9b step@5 (%) ===
+cell        correct-error/arc  correct-error/gaia  correct-error/hotpot  correct-error/math500  correct-error/mmlu_pro  correct-error/musique  correct-error/wikimqa  traceelephant/captain  traceelephant/magentic  ww/algorithm-generated  ww/hand-crafted
+method                                                                                                                                                                                                                                                      
+oat                     88.51               91.20                 74.79                  90.46                   89.71                  71.97                  68.61                   73.8                   40.29                   86.46            38.39
+stepfinder              87.32               70.13                 57.74                  87.00                   82.46                  46.84                  48.56                   50.7                   28.12                   75.87            34.48

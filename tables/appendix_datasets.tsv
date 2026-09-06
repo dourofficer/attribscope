@@ -1,0 +1,13 @@
+column	dataset	subset	system	n_traj	turns_mean	turns_median	turns_max	steps_mean	agents_mean	gold_mean	gold_rel_mean	gold_first_turn	n_labeled
+WW-AG	ww	algorithm-generated	CaptainAgent	126	8.7222	10.0000	10	8.7222	3.6349	3.0000	0.3692	20	126
+WW-HC	ww	hand-crafted	Magentic-One	58	51.6034	32.5000	130	50.6034	5.6897	15.1552	0.4598	0	58
+CE-arc	correct-error	arc	CORRECT	304	5.2566	2.0000	22	5.2566	2.2467	2.0263	0.8645	11	304
+CE-gaia	correct-error	gaia	CORRECT	50	10.9400	10.0000	22	10.9400	2.9000	7.7200	0.8576	0	50
+CE-hotpot	correct-error	hotpot	CORRECT	578	12.8114	10.0000	22	12.8114	2.9706	5.1592	0.6305	8	578
+CE-math500	correct-error	math500	CORRECT	157	6.2994	5.0000	21	6.2994	3.1210	3.3439	0.8266	3	157
+CE-mmlu_pro	correct-error	mmlu_pro	CORRECT	92	6.1087	2.0000	22	6.1087	2.5870	1.9674	0.7869	6	92
+CE-musique	correct-error	musique	CORRECT	312	14.7372	21.0000	22	14.7372	2.9712	6.1090	0.5938	6	312
+CE-wikimqa	correct-error	wikimqa	CORRECT	733	14.4775	14.0000	22	14.4775	3.0000	6.7244	0.6415	9	733
+TE-Cap	traceelephant	captain	CaptainAgent	85	20.5412	13.0000	59	20.5412	2.7176	6.0235	0.4202	6	85
+TE-Mag	traceelephant	magentic	Magentic-One	91	29.2637	28.0000	50	29.2637	2.1319	11.3956	0.4457	6	91
+CE (macro)	correct-error	all	CORRECT	2226	10.0901	9.1429	22	10.0901	2.8281	4.7215	0.7430	43	2226

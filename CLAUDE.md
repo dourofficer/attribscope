@@ -177,8 +177,9 @@ Two structural consequences:
 `ens-mid3` is the ONE deliberate numerical divergence from `src/`: `src/` orients
 ensemble members by negation before z-scoring (orient was a separate downstream stage
 that `ens-mid3` bypassed), `main/` uses the folded inverse. Every single-position
-number is bit-identical; only `ens-mid3` differs — and it has been selected in 0 of
-4,428 rows.
+number is bit-identical; only `ens-mid3` differs. It is rarely selected: 4 of the 56
+CORRECT-Error rows and 4 of the 16 TraceElephant with-GT rows of the frozen-triple
+selection tables, none on Who&When.
 
 ## Where the details live
 

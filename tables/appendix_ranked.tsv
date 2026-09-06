@@ -1,0 +1,113 @@
+Setting	Backbone	Method	Metric	WW-AG	WW-HC	CE	TE-Cap	TE-Mag
+without GT	Qwen3.5-9B	OAT	step@1	16.72	10.11	56.50	15.35	18.84
+without GT	Qwen3.5-9B	OAT	step@3	56.72	25.75	74.60	53.02	32.17
+without GT	Qwen3.5-9B	OAT	step@5	86.46	38.39	82.18	73.80	40.29
+without GT	Qwen3.5-9B	OAT	agent@1	40.53	53.10	70.58	46.67	62.03
+without GT	Qwen3.5-9B	OAT	agent@3	92.06	81.61	85.99	89.46	90.14
+without GT	Qwen3.5-9B	OAT	agent@5	99.47	91.72	90.24	92.25	92.90
+without GT	Qwen3.5-9B	OAT	mrr	41.46	22.62	67.64	39.04	31.36
+without GT	Qwen3.5-9B	StepFinder	step@1	15.87	13.33	30.03	18.29	6.67
+without GT	Qwen3.5-9B	StepFinder	step@3	55.24	29.66	59.04	37.21	17.10
+without GT	Qwen3.5-9B	StepFinder	step@5	75.87	34.48	68.58	50.70	28.12
+without GT	Qwen3.5-9B	StepFinder	agent@1	39.26	37.01	60.03	47.75	57.83
+without GT	Qwen3.5-9B	StepFinder	agent@3	82.75	52.87	86.71	77.05	86.09
+without GT	Qwen3.5-9B	StepFinder	agent@5	93.86	56.78	92.04	86.20	94.35
+without GT	Qwen3.5-9B	StepFinder	mrr	41.23	24.62	48.45	34.13	19.24
+without GT	Qwen3.5-9B	SOAP (w/o rescoring)	step@1	39.15	33.33	61.38	33.33	21.01
+without GT	Qwen3.5-9B	SOAP (w/o rescoring)	step@3	71.96	43.68	79.20	60.47	31.16
+without GT	Qwen3.5-9B	SOAP (w/o rescoring)	step@5	92.59	49.43	85.58	75.19	41.30
+without GT	Qwen3.5-9B	SOAP (w/o rescoring)	agent@1	52.38	67.82	74.27	58.14	61.59
+without GT	Qwen3.5-9B	SOAP (w/o rescoring)	agent@3	91.53	72.41	85.26	90.70	92.03
+without GT	Qwen3.5-9B	SOAP (w/o rescoring)	agent@5	98.94	77.01	88.12	93.02	96.38
+without GT	Qwen3.5-9B	SOAP (w/o rescoring)	mrr	58.83	41.85	72.17	51.72	30.29
+without GT	Qwen3.5-9B	SOAP	step@1	47.62	34.48	61.78	35.66	23.19
+without GT	Qwen3.5-9B	SOAP	step@3	74.60	42.53	79.61	63.57	32.61
+without GT	Qwen3.5-9B	SOAP	step@5	91.01	50.57	85.74	75.97	42.75
+without GT	Qwen3.5-9B	SOAP	agent@1	60.32	67.82	74.06	60.47	65.22
+without GT	Qwen3.5-9B	SOAP	agent@3	93.12	70.11	85.16	88.37	90.58
+without GT	Qwen3.5-9B	SOAP	agent@5	97.35	78.16	88.14	93.02	96.38
+without GT	Qwen3.5-9B	SOAP	mrr	63.92	42.19	72.55	54.25	33.67
+without GT	DeepSeek-R1-Distill-Llama-8B	OAT	step@1	12.70	15.86	52.50	17.98	13.04
+without GT	DeepSeek-R1-Distill-Llama-8B	OAT	step@3	45.19	37.01	74.08	47.13	31.01
+without GT	DeepSeek-R1-Distill-Llama-8B	OAT	step@5	83.92	42.30	83.17	75.04	41.45
+without GT	DeepSeek-R1-Distill-Llama-8B	OAT	agent@1	42.33	56.32	69.04	50.08	63.91
+without GT	DeepSeek-R1-Distill-Llama-8B	OAT	agent@3	86.98	81.84	86.22	88.84	90.14
+without GT	DeepSeek-R1-Distill-Llama-8B	OAT	agent@5	97.67	92.18	91.93	95.97	97.97
+without GT	DeepSeek-R1-Distill-Llama-8B	OAT	mrr	37.62	29.03	65.30	39.60	27.54
+without GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	step@1	18.94	10.80	36.91	14.73	4.20
+without GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	step@3	60.32	21.61	63.05	41.24	11.01
+without GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	step@5	78.94	29.20	74.12	58.60	21.45
+without GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	agent@1	48.99	41.15	67.29	45.12	42.61
+without GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	agent@3	83.39	54.48	87.55	81.71	90.72
+without GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	agent@5	93.76	60.92	91.98	88.99	98.84
+without GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	mrr	43.75	20.99	53.65	33.90	15.87
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	step@1	38.62	28.74	64.19	40.31	29.71
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	step@3	72.49	42.53	79.96	58.14	34.78
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	step@5	91.53	59.77	87.01	75.97	47.83
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	agent@1	58.73	65.52	75.72	63.57	62.32
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	agent@3	94.71	73.56	86.04	91.47	92.03
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	agent@5	98.41	81.61	90.28	96.90	94.93
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	mrr	58.54	42.09	73.90	55.41	38.15
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP	step@1	45.50	28.74	64.68	42.64	30.43
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP	step@3	76.19	42.53	80.30	62.02	39.13
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP	step@5	93.12	59.77	87.41	78.29	44.20
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP	agent@1	61.90	65.52	75.84	65.12	62.32
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP	agent@3	91.01	73.56	86.74	91.47	91.30
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP	agent@5	96.83	81.61	91.63	96.90	96.38
+without GT	DeepSeek-R1-Distill-Llama-8B	SOAP	mrr	63.71	42.09	74.38	57.83	39.35
+with GT	Qwen3.5-9B	OAT	step@1					
+with GT	Qwen3.5-9B	OAT	step@3					
+with GT	Qwen3.5-9B	OAT	step@5					
+with GT	Qwen3.5-9B	OAT	agent@1					
+with GT	Qwen3.5-9B	OAT	agent@3					
+with GT	Qwen3.5-9B	OAT	agent@5					
+with GT	Qwen3.5-9B	OAT	mrr					
+with GT	Qwen3.5-9B	StepFinder	step@1					
+with GT	Qwen3.5-9B	StepFinder	step@3					
+with GT	Qwen3.5-9B	StepFinder	step@5					
+with GT	Qwen3.5-9B	StepFinder	agent@1					
+with GT	Qwen3.5-9B	StepFinder	agent@3					
+with GT	Qwen3.5-9B	StepFinder	agent@5					
+with GT	Qwen3.5-9B	StepFinder	mrr					
+with GT	Qwen3.5-9B	SOAP (w/o rescoring)	step@1	41.27	33.33	60.30	32.56	15.94
+with GT	Qwen3.5-9B	SOAP (w/o rescoring)	step@3	74.07	47.13	77.77	54.26	26.09
+with GT	Qwen3.5-9B	SOAP (w/o rescoring)	step@5	88.89	52.87	84.65	81.40	36.23
+with GT	Qwen3.5-9B	SOAP (w/o rescoring)	agent@1	57.14	67.82	75.10	61.24	60.87
+with GT	Qwen3.5-9B	SOAP (w/o rescoring)	agent@3	93.65	72.41	84.65	88.37	89.13
+with GT	Qwen3.5-9B	SOAP (w/o rescoring)	agent@5	99.47	77.01	88.28	96.90	92.03
+with GT	Qwen3.5-9B	SOAP (w/o rescoring)	mrr	60.07	42.73	71.04	50.60	26.84
+with GT	Qwen3.5-9B	SOAP	step@1	43.39	34.48	60.59	36.43	21.01
+with GT	Qwen3.5-9B	SOAP	step@3	64.55	45.98	77.87	63.57	31.16
+with GT	Qwen3.5-9B	SOAP	step@5	83.60	51.72	85.09	85.27	36.23
+with GT	Qwen3.5-9B	SOAP	agent@1	59.26	67.82	75.33	63.57	63.04
+with GT	Qwen3.5-9B	SOAP	agent@3	88.89	70.11	84.86	90.70	87.68
+with GT	Qwen3.5-9B	SOAP	agent@5	95.77	73.56	88.47	96.90	92.03
+with GT	Qwen3.5-9B	SOAP	mrr	59.69	42.85	71.30	54.95	31.10
+with GT	DeepSeek-R1-Distill-Llama-8B	OAT	step@1					
+with GT	DeepSeek-R1-Distill-Llama-8B	OAT	step@3					
+with GT	DeepSeek-R1-Distill-Llama-8B	OAT	step@5					
+with GT	DeepSeek-R1-Distill-Llama-8B	OAT	agent@1					
+with GT	DeepSeek-R1-Distill-Llama-8B	OAT	agent@3					
+with GT	DeepSeek-R1-Distill-Llama-8B	OAT	agent@5					
+with GT	DeepSeek-R1-Distill-Llama-8B	OAT	mrr					
+with GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	step@1					
+with GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	step@3					
+with GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	step@5					
+with GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	agent@1					
+with GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	agent@3					
+with GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	agent@5					
+with GT	DeepSeek-R1-Distill-Llama-8B	StepFinder	mrr					
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	step@1	40.21	29.89	64.81	41.09	35.51
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	step@3	71.43	43.68	80.19	66.67	42.03
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	step@5	92.06	62.07	86.59	80.62	51.45
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	agent@1	58.20	65.52	76.57	64.34	64.49
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	agent@3	93.65	73.56	85.87	94.57	89.86
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	agent@5	99.47	80.46	90.54	96.90	96.38
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	mrr	59.36	43.29	74.35	57.52	43.26
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP	step@1	44.97	29.89	65.19	42.64	36.96
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP	step@3	64.55	43.68	80.62	71.32	42.03
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP	step@5	86.24	62.07	86.94	80.62	50.00
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP	agent@1	61.38	65.52	76.72	65.89	64.49
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP	agent@3	91.01	73.56	87.17	94.57	83.33
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP	agent@5	98.41	80.46	91.55	96.90	93.48
+with GT	DeepSeek-R1-Distill-Llama-8B	SOAP	mrr	60.32	43.29	74.79	58.92	44.06

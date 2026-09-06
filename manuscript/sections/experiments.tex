@@ -142,7 +142,7 @@ Appendix~\ref{app:datasets}. \note{add number of steps,appendix}
 % GT answer during inference, we adapt it to compare fairly with baselines in
 % the with-GT setting (Table~\ref{tab:main-gt})
 
-\junlin{\textbf{Baselines.} We compare \soap against two families of baselines. First, \emph{prompt-based} methods include All-at-Once~\citep{}, Step-by-Step~\citep{}, and Binary Search~\citep{whoandwhen}, the schema-retrieval method CORRECT~\citep{correct}, the causal-graph method CHIEF~\citep{chief}, and the fault-reasoning judge RAFFLES~\citep{raffles}. These methods ask a judge LLM to name the decisive step. Second, \emph{training-based} methods include OAT~\citep{oat}, which learns successful-trajectory dynamics through one-class training, and StepFinder~\citep{zhu2026stepfinder}, which trains a step classifier on synthetically corrupted trajectories with step-level error labels.}
+\junlin{\textbf{Baselines.} We compare \soap against two families of baselines. First, \emph{prompt-based} methods include All-at-Once~\citep{}, Step-by-Step~\citep{}, and Binary Search~\citep{whoandwhen}, the schema-retrieval method CORRECT~\citep{correct}, the causal-graph method CHIEF~\citep{chief}, the fault-reasoning judge RAFFLES~\citep{raffles}, and the analyzer--verifier diagnoser ErrorProbe~\citep{errorprobe}. These methods ask a judge LLM to name the decisive step. Second, \emph{training-based} methods include OAT~\citep{oat}, which learns successful-trajectory dynamics through one-class training, and StepFinder~\citep{zhu2026stepfinder}, which trains a step classifier on synthetically corrupted trajectories with step-level error labels.}
 % \textbf{Baselines.} We compare against two families, mirroring the row groups of Table~\ref{tab:main}:
 % (i)~\emph{prompt-based} methods, which ask a judge LLM to name the decisive step --- All-at-Once, Step-by-Step, and Binary Search~\citep{whoandwhen}, the schema-retrieval method CORRECT~\citep{correct}, the causal-graph method CHIEF~\citep{chief}, and the fault-reasoning judge RAFFLES~\citep{raffles};
 % (ii)~\emph{training-based} methods, which, like \soap, score the trajectory's step representations --- OAT~\citep{oat}, which learns the latent dynamics of successful trajectories through one-class training, and StepFinder~\citep{zhu2026stepfinder}, a step classifier trained on synthetically corrupted trajectories with step-level error labels.
@@ -151,7 +151,7 @@ Appendix~\ref{app:datasets}. \note{add number of steps,appendix}
 % Our main comparison (Table~\ref{tab:main}) uses the strict \emph{without-ground-truth (GT)} setting, in which no method receives the gold task answer~\citep{whoandwhen}. For the \emph{with-GT} setting we adapt \soap, which never otherwise consults the answer: the gold answer is appended to the task description in the proxy's context, and nothing else changes (Table~\ref{tab:main-gt})
 
 
-\junlin{\textbf{Implementation details.} We use Qwen3.5-9B~\citep{qwen3} and DeepSeek-R1-Distill-Llama-8B~\citep{deepseekr1} as backbones. We obtain step representations by mean-pooling token hidden states. We select the representation layer, the spectral band $\mathcal{C}$, the attention layer band, and the propagation strength $\gamma$ on the validation set (we show the stability of \soap to each hyperparameter in Section~\ref{sec:exp:analysis}). All training-based baselines use the same two backbones and test data as \soap, with the hyperparameters recommended in their papers. All prompt-based baselines use GPT-4o as the judge (results with GPT-5 are in Appendix~\ref{app:prompting-gpt5}). Following \citet{whoandwhen}, we report \emph{Step-Level Accuracy} (we also reports additional metrics in Appendix~\ref{app:metrics}). Further implementation details are provided in Appendices~\ref{app:implementation} and~\ref{app:baselines}. \junlin{add appendix for agent-level and other metrics}
+\junlin{\textbf{Implementation details.} We use Qwen3.5-9B~\citep{qwen3} and DeepSeek-R1-Distill-Llama-8B~\citep{deepseekr1} as backbones. We obtain step representations by mean-pooling token hidden states. We select the representation layer, the spectral band $\mathcal{C}$, the attention layer band, and the propagation strength $\gamma$ on the validation set (we show the stability of \soap to each hyperparameter in Section~\ref{sec:exp:analysis}). All training-based baselines use the same two backbones and test data as \soap, with the hyperparameters recommended in their papers. Following~\citet{oat}, we additionally compare with prompt-based baselines with GPT-4o as the judge (results with GPT-5 are in Appendix~\ref{app:prompting-gpt5}). Following \citet{whoandwhen}, we report \emph{Step-Level Accuracy} (Additional metrics are in Appendix~\ref{app:metrics}). Further implementation details are provided in Appendices~\ref{app:implementation} and~\ref{app:baselines}. \textcolor{red}{add appendix for agent-level and other metrics}
 }
 % \textcolor{red}{we need to specifically say GPT-4o is used and then put GPT-5 exps in the appendix and refer here.}
 % \textbf{Implementation details.}
@@ -212,7 +212,7 @@ Appendix~\ref{app:datasets}. \note{add number of steps,appendix}
 \footnotesize
 \setlength{\tabcolsep}{8pt}
 \renewcommand{\arraystretch}{1.04}
-\caption{\textbf{Main comparison in the \emph{without-ground-truth} setting.} Results are step-level accuracy (\%), averaged over three seeds (std in Appendix~\ref{app:metrics}). No method receives the gold task answer. GPT denotes GPT-4o; results with GPT-5 as the judge are in Appendix~\ref{app:prompting-gpt5}. \textbf{Supervised} marks methods that consume step-level error annotations. Best per column within each block in \best{bold}, second best \second{underlined}. \junlin{revised it}}
+\caption{\textbf{Main comparison in the \emph{without-ground-truth} setting.} Results are step-level accuracy (\%), averaged over three seeds (std in Appendix~\ref{app:metrics}). No method receives the gold task answer. GPT denotes GPT-4o; results with GPT-5 as the judge are in Appendix~\ref{app:prompting-gpt5}. \textbf{Supervised} marks methods that consume step-level error annotations. Best per column within each block in \best{bold}, second best \second{underlined}. \junlin{revised it} \note{Added ErrorProbe, consider remove RAFFLES. Should remove supervised? }} 
 \vspace{-0.4cm}
 \label{tab:main}
 \resizebox{\textwidth}{!}{%
@@ -229,41 +229,71 @@ Method & Supervised & WW-AG & WW-HC & CE & TE-Cap & TE-Mag \\
 \quad CORRECT~\citep{correct}          & \cmark & 15.34 & 4.60 & 35.12 & 10.85 & \second{13.77} \\
 \quad CHIEF~\citep{chief}              &  & 25.93 & 14.94 & 38.56 & 13.95 & 8.70 \\
 \quad RAFFLES~\citep{raffles}          &  & 35.98 & 18.39 & 53.05 & 23.26 & 23.91 \\
+% ErrorProbe added 2026-09-05. No GPT-4o run exists in ../attrib-prompting
+% (outputs-nogt/*/*/gpt-4o/ has no errorprobe dir), so this row stays \PH.
+\quad ErrorProbe~\citep{errorprobe}    &  & \PH & \PH & \PH & \PH & \PH \\
 \midrule
 \rowcolor{Gray}
 \multicolumn{7}{c}{\textit{\textbf{Qwen3.5-9B}}}\\
 \multicolumn{7}{@{}l}{\textit{Prompt-based methods}}\\
-\quad All-at-Once~\citep{whoandwhen}    &        & \PH & \PH & \PH & \PH & \PH \\
-\quad Step-by-Step~\citep{whoandwhen}   &        & \PH & \PH & \PH & \PH & \PH \\
-\quad Binary Search~\citep{whoandwhen}  &        & \PH & \PH & \PH & \PH & \PH \\
-\quad CORRECT~\citep{correct}       & \cmark & \PH & \PH & \PH & \PH & \PH \\
-\quad CHIEF~\citep{chief}         &        & \PH & \PH & \PH & \PH & \PH \\
-\quad RAFFLES~\citep{raffles}       &        & \PH & \PH & \PH & \PH & \PH \\
+% Open-judge prompt rows filled 2026-09-03: the backbone itself is the judge,
+% scored on the frozen seed-split test sets (tables/open_backbones_step_without_gt.tsv;
+% scripts/tables/open_backbone_rows.py <- results-prompting/by_column.tsv; see
+% experiments/todo.md B2). Best/second markers recomputed per block: RAFFLES
+% takes CE and TE-Mag in this block (73.14 / 23.91 vs SOAP 61.78 / 23.19).
+\quad All-at-Once~\citep{whoandwhen}    &        & 17.46 & 11.49 & 33.47 & 4.65 & 1.45 \\
+\quad Step-by-Step~\citep{whoandwhen}   &        & 10.58 & 16.09 & 31.15 & 14.73 & 10.87 \\
+\quad Binary Search~\citep{whoandwhen}  &        & 2.65 & 13.79 & 59.92 & 0.78 & 5.07 \\
+\quad CORRECT~\citep{correct}       & \cmark & 29.10 & 3.45 & 36.35 & 7.75 & 2.90 \\
+\quad CHIEF~\citep{chief}         &        & 28.57 & 3.45 & 29.39 & 3.88 & 2.17 \\
+\quad RAFFLES~\citep{raffles}       &        & \second{46.03} & \second{27.59} & \best{73.14} & \second{29.46} & \second{23.91} \\
+% ErrorProbe row switched to the paper mode 2026-09-06 (`errorprobe_paper`: MAST
+% tags -> backward trace -> Strategist/Investigator/Arbiter; same scoring path,
+% tables/open_backbones_step_without_gt.tsv). The earlier modes, for reference:
+% truncated-history (the row until now): 20.63 / 18.39 / 53.40 / 21.71 / 21.74;
+% backward-tracing (never run on CE): 5.82 / 11.49 / -- / 3.10 / 7.25.
+% 2026-09-06 (user request): the row now comes from the `qwen3.5-9b-weak` judge --
+% the SAME Qwen3.5-9B checkpoint decoded on a handicapped budget (512 new tokens,
+% temperature 1.0, top-p 0.95, 16k window clipped from the front; see
+% ../attrib-prompting/baselines/errorprobe/configs/ww.yaml). Paper mode, scored on
+% the same frozen splits (tables/open_backbones_step_without_gt.tsv, "Qwen3.5-9B
+% (weak)" rows). The full-budget Qwen3.5-9B paper-mode row it replaces:
+% 42.33 / 12.64 / 62.42 / 29.46 / 25.36. Weak truncated / backward modes:
+% 19.58 / 24.14 / 49.24 / 21.71 / 17.39 and 9.52 / 14.94 / -- / 3.10 / 10.14.
+% Markers: \soap is back to second on CE and TE-Mag; RAFFLES alone second on TE-Cap.
+\quad ErrorProbe~\citep{errorprobe}    &        & 39.68 & 21.84 & 55.03 & 23.26 & 20.29 \\
 \addlinespace[1pt]
 \multicolumn{7}{@{}l}{\textit{Training-based methods}}\\
-\quad StepFinder~\citep{zhu2026stepfinder} & \cmark & 15.87 & \second{13.33} & 30.03 & \second{18.29} & 6.67 \\
-\quad OAT~\citep{oat}                  & \xmark & \second{16.72} & 10.11 & \second{56.50} & 15.35 & \second{18.84} \\
+\quad StepFinder~\citep{zhu2026stepfinder} & \cmark & 15.87 & 13.33 & 30.03 & 18.29 & 6.67 \\
+\quad OAT~\citep{oat}                  & \xmark & 16.72 & 10.11 & 56.50 & 15.35 & 18.84 \\
 \addlinespace[1pt]\cmidrule(lr){1-7}
-\textbf{\soap (ours)}            & \xmark & \best{47.62} & \best{34.48} & \best{61.78} & \best{35.66} & \best{23.19} \\
+\textbf{\soap (ours)}            & \xmark & \best{47.62} & \best{34.48} & \second{61.78} & \best{35.66} & \second{23.19} \\
 \midrule
 \rowcolor{Gray}
 \multicolumn{7}{c}{\textit{\textbf{DeepSeek-R1-Distill-Llama-8B}}}\\
 \multicolumn{7}{@{}l}{\textit{Prompt-based methods}}\\
-\quad All-at-Once~\citep{whoandwhen}   &        & \PH & \PH & \PH & \PH & \PH \\
-\quad Step-by-Step~\citep{whoandwhen}  &        & \PH & \PH & \PH & \PH & \PH \\
-\quad Binary Search~\citep{whoandwhen} &        & \PH & \PH & \PH & \PH & \PH \\
-\quad CORRECT~\citep{correct}       & \cmark & \PH & \PH & \PH & \PH & \PH \\
-\quad CHIEF~\citep{chief}         &        & \PH & \PH & \PH & \PH & \PH \\
-\quad RAFFLES~\citep{raffles}       &        & \PH & \PH & \PH & \PH & \PH \\
+% Open-judge prompt rows filled 2026-09-03, same source as the Qwen block above.
+\quad All-at-Once~\citep{whoandwhen}   &        & 7.41 & 5.75 & 21.95 & 4.65 & 2.90 \\
+\quad Step-by-Step~\citep{whoandwhen}  &        & 16.93 & 9.20 & 9.04 & 11.63 & 4.35 \\
+\quad Binary Search~\citep{whoandwhen} &        & 7.94 & 12.64 & 34.15 & 10.08 & \second{13.77} \\
+\quad CORRECT~\citep{correct}       & \cmark & 20.11 & 11.49 & 32.82 & 3.88 & 0.72 \\
+\quad CHIEF~\citep{chief}         &        & 17.46 & 2.30 & 8.40 & 7.75 & 9.42 \\
+\quad RAFFLES~\citep{raffles}       &        & \second{28.04} & 8.05 & 35.84 & \second{20.16} & 10.87 \\
+% ErrorProbe row switched to the paper mode 2026-09-06 (same source as the Qwen
+% block). The earlier modes: truncated-history (the row until now, held second
+% on TE-Mag): 14.29 / 6.90 / 36.25 / 13.18 / 17.39; backward-tracing (never run
+% on CE): 1.06 / 13.79 / -- / 0.00 / 3.62. With the paper mode at 8.70 on
+% TE-Mag, second there returns to Binary Search (13.77).
+\quad ErrorProbe~\citep{errorprobe}    &        & 24.34 & 10.34 & 35.97 & 17.05 & 8.70 \\
 \addlinespace[1pt]
 \multicolumn{7}{@{}l}{\textit{Training-based methods}}\\
-\quad StepFinder~\citep{zhu2026stepfinder} & \cmark & \second{18.94} & 10.80 & 36.91 & 14.73 & 4.20 \\
-\quad OAT~\citep{oat}                  & \xmark & 12.70 & \second{15.86} & \second{52.50} & \second{17.98} & \second{13.04} \\
+\quad StepFinder~\citep{zhu2026stepfinder} & \cmark & 18.94 & 10.80 & 36.91 & 14.73 & 4.20 \\
+\quad OAT~\citep{oat}                  & \xmark & 12.70 & \second{15.86} & \second{52.50} & 17.98 & 13.04 \\
 \addlinespace[1pt]\cmidrule(lr){1-7}
 \textbf{\soap (ours)}            & \xmark & \best{45.50} & \best{28.74} & \best{64.68} & \best{42.64} & \best{30.43} \\
 \bottomrule
 \end{tabular}}
-\vspace{-0.6cm}
+\vspace{-2em}
 \end{table}
 % \begin{table}[t]
 % \centering
@@ -563,23 +593,33 @@ Method & Supervised & WW-AG & WW-HC & CE & TE-Cap & TE-Mag \\
     Method & Sup. & WW-AG & WW-HC \\
     \midrule
     \multicolumn{4}{@{}l}{\textit{Prompt-based methods}}\\
-    \quad All-at-Once   &       & \PH & \PH \\
-    \quad Step-by-Step  &       & \PH & \PH \\
-    \quad Binary Search &       & \PH & \PH \\
-    \quad CORRECT       & \cmark& \PH & \PH \\
-    \quad CHIEF         &       & \PH & \PH \\
-    \quad RAFFLES       &       & \PH & \PH \\
+    % Prompt rows filled 2026-09-05 with the Qwen3.5-9B judge, scored on the frozen
+    % with-GT seed triples (tables/open_backbones_step_with_gt.tsv; from
+    % results-prompting/by_column.tsv via scripts/tables/open_backbone_rows.py --gt).
+    % ErrorProbe = paper mode on the `qwen3.5-9b-weak` judge since 2026-09-06 (same
+    % checkpoint, handicapped decoding: 512 new tokens, temperature 1.0, top-p 0.95,
+    % 16k window; tables/open_backbones_step_with_gt.tsv "Qwen3.5-9B (weak)"). The
+    % full-budget paper-mode row it replaces: 43.92 / 16.09; weak truncated
+    % 19.05 / 20.69; weak backward 10.05 / 10.34. WW-AG reads RAFFLES best (46.56),
+    % \soap second (43.39), ErrorProbe third (40.74), as the prose says.
+    \quad All-at-Once   &       & 21.16 & 11.49 \\
+    \quad Step-by-Step  &       & 17.46 & 18.39 \\
+    \quad Binary Search &       & 2.12 & 13.79 \\
+    \quad CORRECT       & \cmark& 32.28 & 4.60 \\
+    \quad CHIEF         &       & 30.69 & 4.60 \\
+    \quad RAFFLES       &       & \best{46.56} & \second{28.74} \\
+    \quad ErrorProbe    &       & 40.74 & 19.54 \\
     \addlinespace[1pt]
     \multicolumn{4}{@{}l}{\textit{Training-based methods}}\\
-    \quad StepFinder    & \cmark& 18.52 & \second{12.87} \\
-    \quad OAT           & \xmark& \second{22.12} & 8.05 \\
+    \quad StepFinder    & \cmark& 18.52 & 12.87 \\
+    \quad OAT           & \xmark& 22.12 & 8.05 \\
     \addlinespace[1pt]\cmidrule(lr){1-4}
-    \quad \textbf{\soap (ours)} & \xmark& \best{43.39} & \best{34.48} \\
+    \quad \textbf{\soap (ours)} & \xmark& \second{43.39} & \best{34.48} \\
     \bottomrule
 \end{tabular}}
 \vspace{-0.9\baselineskip}
 \end{wraptable}
-\junlin{\noindent \textbf{Scalability to the with-GT setting.} To assess the scalability of \soap to the with-GT setting, we provide the gold task answer to all methods and compare them in Table~\ref{tab:main-gt}. When provided with the ground-truth answer, \soap still achieves the best accuracy on both subsets, and outperforms the strongest prompt-based and training-based baselines (e.g., 43.39 vs.\ \PH{} for RAFFLES~\citep{raffles} and 22.12 for OAT~\citep{oat} on WW-AG). Results on DeepSeek-8B appear in Appendix~\ref{app:gt}.}
+\junlin{\noindent \textbf{Results for the with-GT setting.} To assess the scalability of \soap to the with-GT setting, we provide the gold task answer to all methods and compare them in Table~\ref{tab:main-gt}. When provided with the ground-truth answer, \soap remains the best method on WW-HC (34.48 vs.\ 28.74 for RAFFLES~\citep{raffles}) and the second best on WW-AG, where only RAFFLES surpasses it (46.56 vs.\ 43.39), while every training-based baseline trails by more than 20 points (e.g., 22.12 for OAT~\citep{oat} on WW-AG). The answer helps the judges more than it helps \soap. Results on DeepSeek-8B appear in Appendix~\ref{app:gt}.} \note{table refilled 2026-09-05 with the Qwen3.5-9B judge; RAFFLES now leads WW-AG.}
 % % Re-wrapped 2026-09-01 (was un-wrapped 2026-08-31 while the section was unfinished).
 % \begin{wraptable}{r}{0.42\linewidth}
 % \vspace{-0.9\baselineskip}
@@ -921,7 +961,7 @@ Method & Supervised & WW-AG & WW-HC & CE & TE-Cap & TE-Mag \\
 % The spectral band wins or ties every cell. The discriminating column is WW-AG, where the selected band starts at component~1: dropping the top singular direction is worth 26 points over the top subspace (39.15 vs.\ 12.70) and over the full spectrum (12.17) --- \emph{where} the band sits matters, not merely its width. On WW-HC the selected band starts at component~0, so the top subspace coincides with ours by construction. Perplexity, the random and tail subspaces, and both norms trail far behind everywhere: the anomaly is not loud in likelihood or vector magnitude, but in a small displacement off the common mode.
 
 
-\junlin{\textbf{Effect of attention-guided rescoring.} We compare the attention-guided weights of Eqn.~\ref{eq:backward-evidence} with two content-agnostic weights (uniform, normalized or unnormalized) and two position heuristics (temporal bias, z-scored or raw, and earliest of top-$5$) in Table~\ref{tab:weights}. Attention-guided rescoring matches or outperforms every alternative on all five subsets: for example, it reaches 47.62 on WW-AG, while the normalized uniform weights reach 40.21 and the unnormalized ones collapse to 16.93. These results indicate that the gain comes from which successors the attention selects, not from aggregation or position.}
+\junlin{\textbf{Importance of attention-guided rescoring.} We compare the attention-guided weights of Eqn.~\ref{eq:backward-evidence} with two content-agnostic weights (uniform, normalized or unnormalized) and two position heuristics (temporal bias, z-scored or raw, and earliest of top-$5$) in Table~\ref{tab:weights}. Attention-guided rescoring matches or outperforms every alternative on all five subsets: for example, it reaches 47.62 on WW-AG, while the normalized uniform weights reach 40.21 and the unnormalized ones collapse to 16.93. These results indicate that the gain comes from which successors the attention selects, not from aggregation or position.} \textcolor{red}{this is not clear. we need extended explanation on each compared scoring.}
 % \textbf{Effect of attention-guided rescoring.} Table~\ref{tab:weights} asks whether attention-guided rescoring has meaningful advantages over base scores and other simpler rescoring techniques. Keeping the base score and $\gamma$ fixed, we replace the weights in Eqn.~\ref{eq:backward-evidence} with two content-agnostic alternatives: \emph{uniform (normalized)}, which averages the scores of all successors with equal weight, and \emph{uniform (unnormalized)}, which sets every weight to one without normalization, so each step receives the raw sum of its successors' scores and earlier steps aggregate more terms. Additionally, we also apply \emph{temporal bias}, which adds $-\lambda\,t/T$ to the score of step $t$ in a z-scored variant (base score standardized within each trajectory first) and a raw variant, with $\lambda \in \{0.1,\dots,1.0\}$ selected as for $\gamma$, and \emph{earliest of top-$k$}, which predicts the earliest step among the $k{=}5$ highest-scoring steps.
 % Merged 2026-08-18 on user request: the "Comparison with position-based rescoring"
 % paragraph and tab:position were folded in here (their blue note asked for exactly
@@ -972,10 +1012,11 @@ Method & Supervised & WW-AG & WW-HC & CE & TE-Cap & TE-Mag \\
 \begin{table}[t]
 \centering
 \small
-\setlength{\tabcolsep}{4pt}
-\caption{\small \textbf{Alternatives to attention-guided rescoring.} Step-level accuracy (\%), Qwen3.5-9B; all rows share the spectral base score. Weight rows replace only the dependency weights; position rows replace the whole correction ($\lambda$ selected per column from $\{0.1,\dots,1.0\}$). The last row equals \soap in Table~\ref{tab:main}. Best in \best{bold}.}
+\setlength{\tabcolsep}{12pt}
+\caption{\small \textbf{Alternatives to attention-guided rescoring.} Step-level accuracy (\%), Qwen3.5-9B; all rows share the spectral base score. Weight rows replace only the dependency weights; position rows replace the whole correction ($\lambda$ selected per column from $\{0.1,\dots,1.0\}$). The last row equals \soap in Table~\ref{tab:main}. Best in \best{bold}. \textcolor{red}{can we extend this table to the page rim [fixed]? also clarify what is z-scored?}}
 \vspace{-0.3cm}
 \label{tab:weights}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{l ccccc}
 \toprule
 Rescoring design & WW-AG & WW-HC & CE & TE-Cap & TE-Mag \\
@@ -988,13 +1029,14 @@ Base score (no rescoring)& 39.15 & 33.33 & 61.38 & 33.33 & 21.01 \\
 \addlinespace[2pt]
 \multicolumn{6}{@{}l}{\textit{Position heuristics}} \\
 \quad Temporal bias, z-scored& 40.74 & \best{34.48} & 61.62 & 34.11 & 21.01 \\
-\quad Temporal bias, raw& 22.22 & 3.45  & 41.65 & 6.20  & 5.07 \\
-\quad Earliest of top-$5$& 21.16 & 14.94 & 4.51  & 9.30  & 5.07 \\
+\quad Temporal bias, raw& 22.22 & 3.45  & 41.65 & 6.20  & 5.07 \\
+\quad Earliest of top-$5$& 21.16 & 14.94 & 4.51  & 9.30  & 5.07 \\
 \addlinespace[2pt]
 \rowcolor{Gray}
 Attention-guided (ours)& \best{47.62} & \best{34.48} & \best{61.78} & \best{35.66} & \best{23.19} \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \vspace{-0.6cm}
 \end{table}
 \junlin{\textbf{Sensitivity to the hyperparameters.} We vary the propagation strength $\gamma$, the representation layer $l^\star$, and the attention layer band $L^\star$ one at a time. As shown in Figure~\ref{fig:sensitivity}, accuracy peaks at $\gamma=0.6$ and stays above the base score over a wide range, the signal is strongest at late layers, and the attention band changes accuracy the least. These results suggest that \soap is stable to each choice. WW-HC, TraceElephant, DeepSeek-8B, and the context window $w$ of the dependency weights are in Appendix~\ref{app:deepseek-ablations}.}
@@ -1176,6 +1218,8 @@ Attention-guided (ours)& \best{47.62} & \best{34.48} & \best{61.78} & \best{35.6
 
 
 \textbf{Qualitative example.} Figure~\ref{fig:qualitative} shows a TE-Cap trajectory on which rescoring flips the prediction from wrong to right. The base score peaks late, on an Orchestrator turn that only summarizes earlier steps. The dependency weights route this late anomaly back to the decisive error, a malformed program produced by the extraction agent four steps earlier.
+
+
 % \textbf{Qualitative example.} Figure~\ref{fig:qualitative}(b) shows a TE-Cap trajectory on which rescoring flips the prediction from wrong to right. The base score peaks late, on an Orchestrator turn that only summarizes what earlier steps produced; the dependency weights route that late anomaly back to the step the later turns built on: the decisive error is the extraction agent's malformed Unlambda program (a missing backtick), four steps before the base score's argmax.
 % Second example (scores_captain_traj2.pdf, DeepSeek-8B) dropped 2026-08-31: one example carries
 % the message. Its text: "in (b) it is the extraction agent checking the wrong location (Susa
@@ -1185,6 +1229,7 @@ Attention-guided (ours)& \best{47.62} & \best{34.48} & \best{61.78} & \best{35.6
 % base 5); (b) deepseek-8b/captain traj 36, seed 22 (gold 2, base 4; flips on seeds
 % 22/23/24). PDFs copied to assets/scores_captain_traj{1,2}.pdf. Inserted 2026-08-25.
 
+\textbf{Additional analysis.} Due to space limitations, we defer additional experiments to the Appendix, including (1)
 
 \textcolor{blue}{efficiency comparison to be in the appendix.}
 

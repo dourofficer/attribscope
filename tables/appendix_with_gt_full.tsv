@@ -1,0 +1,27 @@
+Backbone	Method	WW-AG	WW-HC	CE	TE-Cap	TE-Mag
+GPT-4o	All-at-Once	15.87	3.45	24.50	9.30	6.52
+GPT-4o	Step-by-Step	22.75	18.39	59.29	18.60	19.57
+GPT-4o	Binary Search	28.57	4.60	18.44	9.30	6.52
+GPT-4o	CORRECT	15.87	4.60	37.09	10.85	10.14
+GPT-4o	CHIEF	24.34	11.49	42.10	14.73	13.77
+GPT-4o	RAFFLES	42.33	27.59	68.41	27.91	28.26
+Qwen3.5-9B	All-at-Once	21.16	11.49		6.98	1.45
+Qwen3.5-9B	Step-by-Step	17.46	18.39		24.81	21.01
+Qwen3.5-9B	Binary Search	2.12	13.79		0.00	10.14
+Qwen3.5-9B	CORRECT	32.28	4.60			
+Qwen3.5-9B	CHIEF	30.69	4.60			
+Qwen3.5-9B	RAFFLES	46.56	28.74			
+Qwen3.5-9B	StepFinder	18.52	12.87	28.52	13.64	8.99
+Qwen3.5-9B	OAT	22.12	8.05	56.21	17.98	20.00
+Qwen3.5-9B	SOAP (w/o rescoring)	41.27	33.33	60.30	32.56	15.94
+Qwen3.5-9B	SOAP	43.39	34.48	60.59	36.43	21.01
+DeepSeek-R1-Distill-Llama-8B	All-at-Once	21.16	5.75		8.53	4.35
+DeepSeek-R1-Distill-Llama-8B	Step-by-Step	15.34	3.45		10.85	5.07
+DeepSeek-R1-Distill-Llama-8B	Binary Search	6.35	12.64		4.65	7.25
+DeepSeek-R1-Distill-Llama-8B	CORRECT	19.58	11.49			
+DeepSeek-R1-Distill-Llama-8B	CHIEF	14.29	11.49			
+DeepSeek-R1-Distill-Llama-8B	RAFFLES	32.80	13.79			
+DeepSeek-R1-Distill-Llama-8B	StepFinder	18.94	9.89	24.99	15.04	6.23
+DeepSeek-R1-Distill-Llama-8B	OAT	20.85	17.01	52.39	18.14	13.77
+DeepSeek-R1-Distill-Llama-8B	SOAP (w/o rescoring)	40.21	29.89	64.81	41.09	35.51
+DeepSeek-R1-Distill-Llama-8B	SOAP	44.97	29.89	65.19	42.64	36.96

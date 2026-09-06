@@ -1,4 +1,4 @@
-"""step@k / agent@k, ranked WITHIN each trajectory.
+"""step@k / agent@k (and the gold step's mean reciprocal rank), ranked WITHIN each trajectory.
 
 Ranking is always DESCENDING here: the base score folds the inverse orientation in, so
 "higher = error" holds at every stage and there is no direction axis to carry.
@@ -54,6 +54,7 @@ def compute_metrics(scores, keeper, ks: Sequence[int] = KS) -> dict:
     total = len(keeper.traj_ranges)
     step_hits = {k: 0 for k in ks}
     agent_hits = {k: 0 for k in ks}
+    rr_sum = 0.0       # reciprocal rank of the gold step; "mrr" shares the divisor
     mistake_indices, mistake_roles = get_mistake_meta(keeper)
 
     for (start, end), mistake_step, mistake_role in zip(
@@ -66,6 +67,7 @@ def compute_metrics(scores, keeper, ks: Sequence[int] = KS) -> dict:
         ranked_steps = [s for s, _, _ in step_scores]
         ranked_roles = [standardize_role(r).lower() for _, r, _ in step_scores]
         mistake_rank = ranked_steps.index(mistake_step) + 1
+        rr_sum += 1.0 / mistake_rank
         for k in ks:
             if mistake_rank <= k:
                 step_hits[k] += 1
@@ -73,7 +75,8 @@ def compute_metrics(scores, keeper, ks: Sequence[int] = KS) -> dict:
                 agent_hits[k] += 1
 
     return {**{f"step@{k}": step_hits[k] / total for k in ks},
-            **{f"agent@{k}": agent_hits[k] / total for k in ks}}
+            **{f"agent@{k}": agent_hits[k] / total for k in ks},
+            "mrr": rr_sum / total}
 
 
 class KeeperContext:
@@ -127,6 +130,7 @@ def compute_metrics_batch(scores, keeper, ks: Sequence[int] = KS,
     dev = scores.device
     step_hits = {k: torch.zeros(C, device=dev, dtype=torch.long) for k in ks}
     agent_hits = {k: torch.zeros(C, device=dev, dtype=torch.long) for k in ks}
+    rr_sum = torch.zeros(C, device=dev, dtype=torch.double)
 
     for t in ctx.trajs:
         A = scores[:, t["start"]:t["end"]]                # (C, T)
@@ -135,6 +139,7 @@ def compute_metrics_batch(scores, keeper, ks: Sequence[int] = KS,
         rm = t["role_match"].to(dev)                      # (T,)
         sm = A[:, m:m + 1]
         rank_m = 1 + (A > sm).sum(1) + (A[:, :m] == sm).sum(1)      # (C,)
+        rr_sum += 1.0 / rank_m.double()
         Ai, Aip = A.unsqueeze(2), A.unsqueeze(1)          # (C,T,1), (C,1,T)
         gt = (Aip > Ai).sum(2)                            # (C,T): #better than i
         tri = torch.tril(torch.ones(T, T, device=dev, dtype=torch.long), diagonal=-1)
@@ -145,4 +150,5 @@ def compute_metrics_batch(scores, keeper, ks: Sequence[int] = KS,
             agent_hits[k] += ((rank_i <= k) & rm.unsqueeze(0)).any(dim=1).long()
 
     return {**{f"step@{k}": step_hits[k].cpu().numpy() / ctx.total for k in ks},
-            **{f"agent@{k}": agent_hits[k].cpu().numpy() / ctx.total for k in ks}}
+            **{f"agent@{k}": agent_hits[k].cpu().numpy() / ctx.total for k in ks},
+            "mrr": rr_sum.cpu().numpy() / ctx.total}

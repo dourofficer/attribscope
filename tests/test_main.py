@@ -489,6 +489,24 @@ def test_batch_metrics_equal_loop():
         for k in (1, 3):
             for kind in ("step", "agent"):
                 assert abs(batch[f"{kind}@{k}"][i] - loop[f"{kind}@{k}"]) < 1e-12
+        assert abs(batch["mrr"][i] - loop["mrr"]) < 1e-12
+
+
+def test_mrr_uses_earliest_tie_rank_and_full_divisor():
+    keeper = _keeper(mstores)
+    N = keeper.traj_ranges[-1][1]
+    # all-equal scores: every gold step ranks at its own position + 1
+    loop = mmetrics.compute_metrics(torch.zeros(N), keeper, [1])
+    ctx = mmetrics.KeeperContext(keeper)
+    want = sum(1.0 / (t["m"] + 1) for t in ctx.trajs) / ctx.total
+    assert abs(loop["mrr"] - want) < 1e-12
+    # a gold step ranked first everywhere gives mrr == step@1 == hits / total
+    s = torch.zeros(N)
+    for t in ctx.trajs:
+        s[t["start"] + t["m"]] = 1.0
+    loop = mmetrics.compute_metrics(s, keeper, [1])
+    assert abs(loop["mrr"] - loop["step@1"]) < 1e-12
+    assert abs(loop["step@1"] - len(ctx.trajs) / ctx.total) < 1e-12
 
 
 def test_ensemble_uses_train_statistics_only():

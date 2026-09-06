@@ -30,10 +30,13 @@ COLUMNS = ["WW-AG", "WW-HC", "CE", "TE-Cap", "TE-Mag"]
 # (display name, method stem) in the row order of tab:main's prompting group.
 ROWS = [("All-at-Once", "all_at_once"), ("Step-by-Step", "step_by_step"),
         ("Binary Search", "binary_search"), ("CORRECT", "correct"),
-        ("CHIEF", "chief"), ("RAFFLES", "raffles")]
+        ("CHIEF", "chief"), ("RAFFLES", "raffles"),
+        ("ErrorProbe", "errorprobe"), ("ErrorProbe (backward)", "errorprobe_bt"),
+        ("ErrorProbe (paper)", "errorprobe_paper")]
 
 BACKBONES = [("Qwen3.5-9B", "qwen3.5-9b"),
-             ("DeepSeek-R1-Distill-Llama-8B", "deepseek-8b")]
+             ("DeepSeek-R1-Distill-Llama-8B", "deepseek-8b"),
+             ("Qwen3.5-9B (weak)", "qwen3.5-9b-weak")]
 
 
 def build(df: pd.DataFrame, gt: bool, metric: str) -> list[list[str]]:
